@@ -1,0 +1,2 @@
+rootProject.name='Maple'
+include ':app'
