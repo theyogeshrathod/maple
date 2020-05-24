@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_default"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/base_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_toolbar_height"
+            android:background="@color/colorPrimary"
+            android:contentInsetEnd="@dimen/content_inset_size"
+            android:contentInsetLeft="@dimen/content_inset_size"
+            android:contentInsetRight="@dimen/content_inset_size"
+            android:contentInsetStart="@dimen/content_inset_size"
+            app:contentInsetEnd="@dimen/content_inset_size"
+            app:contentInsetLeft="@dimen/content_inset_size"
+            app:contentInsetRight="@dimen/content_inset_size"
+            app:contentInsetStart="@dimen/content_inset_size" >
+
+            <include layout="@layout/toolbar_layout" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/container_margin">
+
+        </FrameLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

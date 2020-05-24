@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/toolbar_back_button"
+        android:layout_width="@dimen/base_toolbar_icon_size"
+        android:layout_height="@dimen/base_toolbar_icon_size"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/back"
+        android:background="@color/transparent"
+        android:contentDescription="@string/back_button" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/toolbar_margin_start"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/toolbar_back_button"
+        style="@style/toolbar_title_style"
+        tools:ignore="RelativeOverlap" />
+
+    <ImageButton
+        android:id="@+id/toolbar_settings_button"
+        android:layout_width="@dimen/base_toolbar_icon_size"
+        android:layout_height="@dimen/base_toolbar_icon_size"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/settings"
+        android:background="@color/transparent"
+        android:contentDescription="@string/back_button"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
