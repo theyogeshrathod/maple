@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="base_toolbar_height">56dp</dimen>
+    <dimen name="base_toolbar_icon_size">56dp</dimen>
+    <dimen name="toolbar_margin_start">16dp</dimen>
+    <dimen name="plain_text_size">16sp</dimen>
+    <dimen name="toolbar_title_text_size">22sp</dimen>
+    <dimen name="content_inset_size">0dp</dimen>
+    <dimen name="container_margin">8dp</dimen>
+</resources>
