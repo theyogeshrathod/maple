@@ -35,4 +35,14 @@ public class WorldFragment extends BaseFragment {
         ((TextView) view.findViewById(R.id.text)).setText("World!");
         view.findViewById(R.id.next).setVisibility(View.GONE);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateToolbar();
+    }
+
+    private void updateToolbar() {
+        setToolbarTitle(R.string.home_title);
+    }
 }

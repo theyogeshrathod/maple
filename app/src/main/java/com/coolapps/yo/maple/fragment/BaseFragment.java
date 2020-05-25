@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+
+import com.coolapps.yo.maple.OnFragmentChangeListener;
+import com.coolapps.yo.maple.OnToolbarActionListener;
 
 /**
  * Base class for all the fragments.
@@ -24,23 +28,26 @@ abstract class BaseFragment extends Fragment {
 
     private OnFragmentChangeListener mOnFragmentChangeListener;
 
+    private OnToolbarActionListener mOnToolbarActionListener;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Log.d(TAG, "onAttach() " + this);
 
         mOnFragmentChangeListener = resolveHostInterface(this, OnFragmentChangeListener.class);
+        mOnToolbarActionListener = resolveHostInterface(this, OnToolbarActionListener.class);
     }
 
     /**
-     * This methods a reference of the fragment or activity which has implemented {@link OnFragmentChangeListener}
-     * Returns null if the parent fragment or activity does not implement {@link OnFragmentChangeListener}.
+     * This methods a reference of the fragment or activity which has implemented {@link T}
+     * Returns null if the parent fragment or activity does not implement {@link T}.
      * @param fragment the fragment
-     * @param callbackClass {@link OnFragmentChangeListener} class
-     * @return {@link OnFragmentChangeListener} if callbackClass is implemented by parent fragment or activity, null otherwise.
+     * @param callbackClass {@link T} class
+     * @return {@link T} if callbackClass is implemented by parent fragment or activity, null otherwise.
      */
     @Nullable
-    private OnFragmentChangeListener resolveHostInterface (@NonNull Fragment fragment, @NonNull Class<OnFragmentChangeListener> callbackClass) {
+    private <T> T resolveHostInterface (@NonNull Fragment fragment, @NonNull Class<T> callbackClass) {
         final Fragment parentFragment = fragment.getParentFragment();
         if (parentFragment != null && callbackClass.isAssignableFrom(parentFragment.getClass())) {
             return callbackClass.cast(parentFragment);
@@ -79,6 +86,30 @@ abstract class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated() " + this);
+    }
+
+    public void setToolbarTitle(@NonNull String title) {
+        mOnToolbarActionListener.setToolbarTitle(title);
+    }
+
+    public void setToolbarTitle(@StringRes int res) {
+        mOnToolbarActionListener.setToolbarTitle(res);
+    }
+
+    public void setToolbarBackClickListener(View.OnClickListener listener) {
+        mOnToolbarActionListener.setToolbarBackClickListener(listener);
+    }
+
+    public void setToolbarSettingsClickListener(View.OnClickListener listener) {
+        mOnToolbarActionListener.setToolbarSettingsClickListener(listener);
+    }
+
+    public void setShowBackButton(boolean show) {
+        mOnToolbarActionListener.setShowBackButton(show);
+    }
+
+    public void setShowSettingsButton(boolean show) {
+        mOnToolbarActionListener.setShowSettingsButton(show);
     }
 
     /**

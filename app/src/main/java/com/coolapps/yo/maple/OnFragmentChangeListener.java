@@ -1,4 +1,4 @@
-package com.coolapps.yo.maple.fragment;
+package com.coolapps.yo.maple;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
