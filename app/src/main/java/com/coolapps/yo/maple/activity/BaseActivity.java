@@ -17,12 +17,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.coolapps.yo.maple.R;
-import com.coolapps.yo.maple.fragment.OnFragmentChangeListener;
+import com.coolapps.yo.maple.OnFragmentChangeListener;
+import com.coolapps.yo.maple.OnToolbarActionListener;
 
 /**
  * Base activity which should be extended by all the activities.
  */
-public abstract class BaseActivity extends AppCompatActivity implements OnFragmentChangeListener {
+public abstract class BaseActivity extends AppCompatActivity implements OnFragmentChangeListener,
+        OnToolbarActionListener {
 
     /**
      * Logging tag to be used for this class.
@@ -87,27 +89,27 @@ public abstract class BaseActivity extends AppCompatActivity implements OnFragme
         fragmentTransaction.commit();
     }
 
-    protected void setToolbarTitle(@NonNull String title) {
+    public void setToolbarTitle(@NonNull String title) {
         mToolbarTitle.setText(title);
     }
 
-    protected void setToolbarTitle(@StringRes int res) {
+    public void setToolbarTitle(@StringRes int res) {
         mToolbarTitle.setText(res);
     }
 
-    protected void setToolbarBackClickListener(View.OnClickListener listener) {
+    public void setToolbarBackClickListener(View.OnClickListener listener) {
         mToolbarBackButton.setOnClickListener(listener);
     }
 
-    protected void setToolbarSettingsClickListener(View.OnClickListener listener) {
+    public void setToolbarSettingsClickListener(View.OnClickListener listener) {
         mToolbarSettingsButton.setOnClickListener(listener);
     }
 
-    protected void setShowBackButton(boolean show) {
+    public void setShowBackButton(boolean show) {
         mToolbarBackButton.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    protected void setShowSettingsButton(boolean show) {
+    public void setShowSettingsButton(boolean show) {
         mToolbarSettingsButton.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 

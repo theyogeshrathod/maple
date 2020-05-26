@@ -4,7 +4,13 @@
     <dimen name="base_toolbar_icon_size">56dp</dimen>
     <dimen name="toolbar_margin_start">16dp</dimen>
     <dimen name="plain_text_size">16sp</dimen>
+    <dimen name="header_text_size">20sp</dimen>
     <dimen name="toolbar_title_text_size">22sp</dimen>
     <dimen name="content_inset_size">0dp</dimen>
     <dimen name="container_margin">8dp</dimen>
+    <dimen name="margin_below_header">30dp</dimen>
+    <dimen name="standard_margin_between_views">10dp</dimen>
+    <dimen name="maple_button_radius">10dp</dimen>
+    <dimen name="maple_button_height">44dp</dimen>
+    <dimen name="maple_button_font_size">7sp</dimen>
 </resources>

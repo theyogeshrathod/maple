@@ -9,6 +9,7 @@
         android:layout_height="@dimen/base_toolbar_icon_size"
         android:layout_centerVertical="true"
         android:src="@mipmap/back"
+        android:visibility="gone"
         android:background="@color/transparent"
         android:contentDescription="@string/back_button" />
 
@@ -27,6 +28,7 @@
         android:layout_width="@dimen/base_toolbar_icon_size"
         android:layout_height="@dimen/base_toolbar_icon_size"
         android:layout_centerVertical="true"
+        android:visibility="gone"
         android:src="@mipmap/settings"
         android:background="@color/transparent"
         android:contentDescription="@string/back_button"

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Maple</string>
     <string name="back_button">Back button</string>
+    <string name="select_login_type">Select login type</string>
+    <string name="login_type_manufacturer">Manufacturer</string>
+    <string name="login_type_trader">Trader</string>
+    <string name="login_type_service_provider">Service provider</string>
+    <string name="login_title">Login</string>
+    <string name="sign_out">Sign out</string>
+    <string name="home_title">Home</string>
+    <string name="home_settings_title">Home Settings</string>
 </resources>

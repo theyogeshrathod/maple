@@ -4,24 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.coolapps.yo.maple.R;
 
 /**
- * This is a test Hello Fragment.
- * TODO: Remove later?
+ * This is a Home Fragment.
  */
-public class HelloFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment {
 
     @NonNull
-    public static HelloFragment newInstance() {
-        return new HelloFragment();
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
     }
 
     @Nullable
@@ -37,4 +34,14 @@ public class HelloFragment extends BaseFragment {
         ((TextView) view.findViewById(R.id.text)).setText("Hello");
         view.findViewById(R.id.next).setOnClickListener(v -> showFragment(WorldFragment.newInstance()));
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateToolbar();
+    }
+
+    private void updateToolbar() {
+        setToolbarTitle(R.string.home_title);
+    }
+
 }
