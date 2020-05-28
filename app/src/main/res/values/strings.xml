@@ -11,4 +11,7 @@
     <string name="home_settings_title">Home Settings</string>
     <string name="account_type_mismatch_text">Please select correct account type</string>
     <string name="ok_text">OK</string>
+    <string name="total_requests">Total Requests</string>
+    <string name="pending_requests">Pending Requests</string>
+    <string name="add_new_entry">Add New Entry</string>
 </resources>
