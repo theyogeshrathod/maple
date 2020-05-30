@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginTop="@dimen/margin10"
         android:layout_weight="1">
 
         <androidx.cardview.widget.CardView
@@ -19,33 +19,29 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            app:cardCornerRadius="@dimen/dimen10">
+            app:cardCornerRadius="@dimen/margin10">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient_bg_1"
                 android:layout_gravity="center"
+                android:background="@drawable/gradient_bg_1"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/dashboard_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/total_requests"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold"
-                    android:textColor="@color/white" />
+                    android:text="@string/total_requests" />
 
                 <TextView
                     android:id="@+id/totalRequests"
+                    style="@style/dashboard_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen5"
-                    android:text="150"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/margin5"
+                    android:text="@string/_150" />
 
             </LinearLayout>
 
@@ -56,8 +52,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dimen20"
-        android:layout_marginBottom="@dimen/dimen20"
+        android:layout_marginTop="@dimen/margin20"
+        android:layout_marginBottom="@dimen/margin20"
         android:layout_weight="1">
 
         <androidx.cardview.widget.CardView
@@ -65,33 +61,29 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            app:cardCornerRadius="@dimen/dimen10">
+            app:cardCornerRadius="@dimen/margin10">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient_bg_2"
                 android:layout_gravity="center"
+                android:background="@drawable/gradient_bg_2"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/dashboard_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/pending_requests"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/white" />
+                    android:text="@string/pending_requests" />
 
                 <TextView
                     android:id="@+id/pendingRequests"
+                    style="@style/dashboard_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen5"
-                    android:text="10"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/margin5"
+                    android:text="@string/_10" />
 
             </LinearLayout>
 
@@ -102,7 +94,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/margin10"
         android:layout_weight="1">
 
         <androidx.cardview.widget.CardView
@@ -110,29 +102,26 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            app:cardCornerRadius="@dimen/dimen10">
+            app:cardCornerRadius="@dimen/margin10">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient_bg_3"
                 android:layout_gravity="center"
+                android:background="@drawable/gradient_bg_3"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/dashboard_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_new_entry"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold"
-                    android:textColor="@color/white" />
+                    android:text="@string/add_new_entry" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
-
 
 </LinearLayout>

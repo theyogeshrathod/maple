@@ -29,4 +29,11 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="dashboard_text_style">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
 </resources>

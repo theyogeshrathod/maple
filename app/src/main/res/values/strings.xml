@@ -14,4 +14,6 @@
     <string name="total_requests">Total Requests</string>
     <string name="pending_requests">Pending Requests</string>
     <string name="add_new_entry">Add New Entry</string>
+    <string name="_150">150</string>
+    <string name="_10">10</string>
 </resources>

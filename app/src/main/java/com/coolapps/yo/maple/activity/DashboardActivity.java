@@ -1,11 +1,12 @@
 package com.coolapps.yo.maple.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.coolapps.yo.maple.R;
 
+/**
+ * This is Dashboard activity for the app
+ */
 public class DashboardActivity extends BaseActivity {
 
     @Override
