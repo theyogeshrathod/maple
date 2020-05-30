@@ -9,4 +9,11 @@
     <color name="toolbarBackground">#7DA5BA</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#A9A9A9</color>
+    <color name="darkGray">#2F2E41</color>
+    <color name="purple">#6E49A1</color>
+    <color name="skyBlue">#12DBEB</color>
+    <color name="pink">#FF6584</color>
+    <color name="darkBlue">#300E5F</color>
 </resources>

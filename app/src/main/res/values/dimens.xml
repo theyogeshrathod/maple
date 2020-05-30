@@ -13,4 +13,8 @@
     <dimen name="maple_button_radius">10dp</dimen>
     <dimen name="maple_button_height">44dp</dimen>
     <dimen name="maple_button_font_size">7sp</dimen>
+    <dimen name="margin100">100dp</dimen>
+    <dimen name="margin5">5dp</dimen>
+    <dimen name="margin10">10dp</dimen>
+    <dimen name="margin20">20dp</dimen>
 </resources>
