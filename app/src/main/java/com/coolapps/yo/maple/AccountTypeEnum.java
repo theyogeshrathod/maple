@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 
 public enum AccountTypeEnum {
     UNKNOWN("0"),
-    MANUFACTURER("1"),
-    TRADER("2"),
-    SERVICE_PROVIDER("3");
+    ADMIN("1"),
+    EDITOR("2"),
+    USER("3");
 
     private final String mValue;
 
