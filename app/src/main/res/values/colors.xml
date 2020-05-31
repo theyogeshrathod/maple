@@ -17,6 +17,9 @@
     <color name="skyBlue">#12DBEB</color>
     <color name="pink">#FF6584</color>
     <color name="darkBlue">#300E5F</color>
+    <color name="premiumCardBackground">#FFDF00</color>
+    <color name="selectedTabTextColor">#FFFFFF</color>
+    <color name="selectedTabIndicator">#6E49A1</color>
     <color name="lightYellow">#FDFBE8</color>
     <color name="lightPink">#FAE7E6</color>
     <color name="lightBlue">#DDEDFA</color>
