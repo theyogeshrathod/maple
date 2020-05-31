@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/lightYellow"
+    android:layout_marginTop="@dimen/standard_margin_between_views"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_marginTop="@dimen/standard_margin_between_views"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:layout_marginTop="@dimen/standard_margin_between_views"
+        android:id="@+id/title"
+        style="@style/header_text_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="@dimen/standard_margin_between_views"
+        android:layout_marginBottom="@dimen/standard_margin_between_views"
+        android:id="@+id/description"
+        style="@style/plain_text_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_margin="@dimen/standard_margin_between_views"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:background="@color/lightBlue"
+            android:id="@+id/approve_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/approve_text" />
+
+        <Button
+            android:background="@color/lightPink"
+            android:id="@+id/un_approve_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reject_text" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -15,30 +15,30 @@
         style="@style/header_text_style"/>
 
     <com.coolapps.yo.maple.widget.MapleButton
-        android:id="@+id/manufacturer_login_button"
+        android:id="@+id/admin_login_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/maple_button_height"
         android:layout_marginStart="@dimen/standard_margin_between_views"
         android:layout_marginEnd="@dimen/standard_margin_between_views"
         android:layout_marginTop="@dimen/margin_below_header"
-        android:text="@string/login_type_manufacturer"/>
+        android:text="@string/login_type_admin"/>
 
     <com.coolapps.yo.maple.widget.MapleButton
-        android:id="@+id/trader_login_button"
+        android:id="@+id/editor_login_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/maple_button_height"
         android:layout_marginStart="@dimen/standard_margin_between_views"
         android:layout_marginEnd="@dimen/standard_margin_between_views"
         android:layout_marginTop="@dimen/standard_margin_between_views"
-        android:text="@string/login_type_trader" />
+        android:text="@string/login_type_editor" />
 
     <com.coolapps.yo.maple.widget.MapleButton
-        android:id="@+id/service_provider_login_button"
+        android:id="@+id/user_login_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/maple_button_height"
         android:layout_marginStart="@dimen/standard_margin_between_views"
         android:layout_marginEnd="@dimen/standard_margin_between_views"
         android:layout_marginTop="@dimen/standard_margin_between_views"
-        android:text="@string/login_type_service_provider" />
+        android:text="@string/login_type_user" />
 
 </LinearLayout>
