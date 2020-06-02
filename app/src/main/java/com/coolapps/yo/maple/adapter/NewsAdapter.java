@@ -28,7 +28,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private NewsItemClickListener mNewsItemClickListener;
 
     public void setNewsItemClickListener(@NonNull NewsItemClickListener newsItemClickListener) {
-        this.mNewsItemClickListener = newsItemClickListener;
+        mNewsItemClickListener = newsItemClickListener;
     }
 
     @NonNull
@@ -38,8 +38,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public void setData(@NonNull List<NewsModel> newsModelList) {
-        this.mNewsModelList.clear();
-        this.mNewsModelList.addAll(newsModelList);
+        mNewsModelList.clear();
+        mNewsModelList.addAll(newsModelList);
         notifyDataSetChanged();
     }
 
@@ -60,10 +60,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView mCardView;
-        ImageView mNewsImage;
-        TextView mNewsTitle;
-        TextView mNewsDescription;
+        private CardView mCardView;
+        private ImageView mNewsImage;
+        private TextView mNewsTitle;
+        private TextView mNewsDescription;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

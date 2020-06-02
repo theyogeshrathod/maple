@@ -1,7 +1,7 @@
 package com.coolapps.yo.maple.fragment;
 
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.activity.NewsModel;
 import com.coolapps.yo.maple.adapter.NewsAdapter;
+import com.coolapps.yo.maple.interfaces.NewsItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
 public class NewsFragment extends BaseFragment {
     private static final String NEWS_ARGS = "news_arg";
     private static final String TAG = "FreeNewsFragment";
+
     private RecyclerView mNewsRecyclerView;
     private List<NewsModel> mNewsList = new ArrayList<>();
     private NewsAdapter mNewsAdapter;
@@ -54,6 +56,7 @@ public class NewsFragment extends BaseFragment {
         if (view != null) {
             init(view);
             mNewsAdapter.setData(mNewsList);
+            mNewsAdapter.setNewsItemClickListener((view1, position) -> Log.d(TAG, "onNewsItemClick: clicked " + position));
         }
         return view;
     }

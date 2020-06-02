@@ -13,6 +13,9 @@ import com.coolapps.yo.maple.MockNewsData;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.fragment.NewsFragment;
 
+/*
+* NewsPager adapter for news tabs
+* */
 public class NewsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
@@ -29,7 +32,7 @@ public class NewsPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        MockNewsData mockNewsData = new MockNewsData();
+        final MockNewsData mockNewsData = new MockNewsData();
         if (position == 0) {
             return NewsFragment.newInstance(mockNewsData.getFreeNewsData());
         } else if (position == 1) {
