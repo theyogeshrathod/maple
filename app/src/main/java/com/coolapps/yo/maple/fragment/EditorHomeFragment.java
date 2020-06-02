@@ -67,7 +67,7 @@ public class EditorHomeFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.editor_fragment_layout, container, false);
+        return inflater.inflate(R.layout.editor_home_layout, container, false);
     }
 
     @Override

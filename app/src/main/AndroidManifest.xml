@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
+        <activity android:name=".activity.NewsActivity" />
         <activity android:name=".activity.DashboardActivity" />
         <activity
             android:name=".activity.LoginActivity"

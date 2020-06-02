@@ -16,6 +16,16 @@
     <string name="add_new_entry">Add New Entry</string>
     <string name="_150">150</string>
     <string name="_10">10</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="newsModel">News</string>
+    <string name="user_image">User Image</string>
+    <string name="tab_text_1">Free News</string>
+    <string name="tab_text_2">Premium News</string>
+    <string name="dummy_text">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.</string>
+    <string name="news_image">News Image</string>
+    <string name="click_to_view">Click to view</string>
     <string name="hang_on_text">Hang on...</string>
     <string name="something_went_wrong_text">Something went wrong</string>
     <string name="title_text">Title</string>
@@ -30,6 +40,7 @@
     <string name="reject_text">Reject</string>
     <string name="admin_text">Admin</string>
     <string name="upload_article_text">Upload Article</string>
+    <string name="home_text">Home</string>
     <string name="italic_text">Italic</string>
     <string name="bold_text">Bold</string>
     <string name="underline_text">Underline</string>
