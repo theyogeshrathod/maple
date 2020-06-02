@@ -36,14 +36,10 @@ public class UserHomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final FragmentManager fragmentManager = getFragmentManager();
-
-        if (fragmentManager != null) {
-            final NewsPagerAdapter newsPagerAdapter = new NewsPagerAdapter(requireActivity(), fragmentManager);
-            final ViewPager viewPager = view.findViewById(R.id.view_pager);
-            viewPager.setAdapter(newsPagerAdapter);
-            final TabLayout tabs = view.findViewById(R.id.tabs);
-            tabs.setupWithViewPager(viewPager);
-        }
+        final NewsPagerAdapter newsPagerAdapter = new NewsPagerAdapter(requireActivity(), getChildFragmentManager());
+        final ViewPager viewPager = view.findViewById(R.id.view_pager);
+        viewPager.setAdapter(newsPagerAdapter);
+        final TabLayout tabs = view.findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
     }
 }
