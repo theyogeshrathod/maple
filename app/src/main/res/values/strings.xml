@@ -30,4 +30,7 @@
     <string name="reject_text">Reject</string>
     <string name="admin_text">Admin</string>
     <string name="upload_article_text">Upload Article</string>
+    <string name="italic_text">Italic</string>
+    <string name="bold_text">Bold</string>
+    <string name="underline_text">Underline</string>
 </resources>
