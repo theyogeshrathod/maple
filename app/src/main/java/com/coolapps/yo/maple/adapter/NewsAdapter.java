@@ -18,6 +18,7 @@ import com.coolapps.yo.maple.ArticleContentType;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.activity.NewsModel;
 import com.coolapps.yo.maple.interfaces.NewsItemClickListener;
+import com.coolapps.yo.maple.util.GetDateFromTimestamp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         private CardView mCardView;
         private ImageView mNewsImage;
         private TextView mNewsTitle;
+        private TextView mNewsDate;
         private TextView mNewsDescription;
         private TextView mSeeFullArticle;
 
@@ -76,18 +78,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             mCardView = itemView.findViewById(R.id.newsCard);
             mNewsImage = itemView.findViewById(R.id.newsImage);
             mNewsTitle = itemView.findViewById(R.id.newsTitle);
+            mNewsDate = itemView.findViewById(R.id.newsDate);
             mNewsDescription = itemView.findViewById(R.id.newsDescription);
             mSeeFullArticle = itemView.findViewById(R.id.see_full_article_text_view);
         }
 
         void bind(@NonNull NewsModel newsModel) {
             mNewsTitle.setText(Html.fromHtml(newsModel.getTitle()));
+            final String date = GetDateFromTimestamp.getDate(Long.parseLong(newsModel.getTimeInMillis()));
+            mNewsDate.setText(date);
             mNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
 
             if (newsModel.getNewsType() == ArticleContentType.FREE) {
                 mCardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.white));
             } else {
-                mCardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.premiumCardBackground));
+                mCardView.setBackground(itemView.getResources().getDrawable(R.drawable.background_premium_news));
             }
 
             if (newsModel.getImageUri() == null || newsModel.getImageUri().isEmpty()) {
