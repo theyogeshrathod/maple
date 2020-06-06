@@ -1,5 +1,6 @@
 package com.coolapps.yo.maple.adapter;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.coolapps.yo.maple.ArticleContentType;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.activity.NewsModel;
@@ -48,6 +51,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.bind(mNewsModelList.get(position));
 
         holder.itemView.setOnClickListener(v -> {
+            holder.seeFullArticle();
+
             if (mNewsItemClickListener != null) {
                 mNewsItemClickListener.onNewsItemClick(v, holder.getAdapterPosition());
             }
@@ -64,6 +69,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         private ImageView mNewsImage;
         private TextView mNewsTitle;
         private TextView mNewsDescription;
+        private TextView mSeeFullArticle;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,11 +77,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             mNewsImage = itemView.findViewById(R.id.newsImage);
             mNewsTitle = itemView.findViewById(R.id.newsTitle);
             mNewsDescription = itemView.findViewById(R.id.newsDescription);
+            mSeeFullArticle = itemView.findViewById(R.id.see_full_article_text_view);
         }
 
         void bind(@NonNull NewsModel newsModel) {
-            mNewsTitle.setText(newsModel.getTitle());
-            mNewsDescription.setText(newsModel.getDescription());
+            mNewsTitle.setText(Html.fromHtml(newsModel.getTitle()));
+            mNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
 
             if (newsModel.getNewsType() == ArticleContentType.FREE) {
                 mCardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.white));
@@ -83,14 +90,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 mCardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.premiumCardBackground));
             }
 
-            if (newsModel.getImageUri().isEmpty()) {
+            if (newsModel.getImageUri() == null || newsModel.getImageUri().isEmpty()) {
                 mNewsImage.setVisibility(View.GONE);
             } else {
+                final RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL);
                 Glide.with(itemView)
                         .load(newsModel.getImageUri())
                         .placeholder(R.drawable.preview_image)
+                        .apply(requestOptions)
                         .into(mNewsImage);
             }
+        }
+
+        void seeFullArticle() {
+            mNewsDescription.setMaxLines(Integer.MAX_VALUE);
+            mSeeFullArticle.setVisibility(View.INVISIBLE);
         }
     }
 }

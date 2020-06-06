@@ -25,7 +25,7 @@
     <string name="tab_text_2">Premium News</string>
     <string name="dummy_text">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.</string>
     <string name="news_image">News Image</string>
-    <string name="click_to_view">Click to view</string>
+    <string name="click_to_view">See full article</string>
     <string name="processing_text">Processing...</string>
     <string name="something_went_wrong_text">Something went wrong</string>
     <string name="title_text">Title</string>

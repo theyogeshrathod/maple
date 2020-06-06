@@ -10,11 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.coolapps.yo.maple.ArticleContentType;
+import com.coolapps.yo.maple.MapleDataModel;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.activity.NewsModel;
 import com.coolapps.yo.maple.adapter.NewsAdapter;
-import com.coolapps.yo.maple.interfaces.NewsItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,49 +25,60 @@ import java.util.List;
  * Fragment for Free news
  */
 public class NewsFragment extends BaseFragment {
-    private static final String NEWS_ARGS = "news_arg";
+    private static final String ARTICLE_TYPE_ARGS = "article_type_arg";
     private static final String TAG = "FreeNewsFragment";
 
+    private SwipeRefreshLayout mRoot;
     private RecyclerView mNewsRecyclerView;
     private List<NewsModel> mNewsList = new ArrayList<>();
     private NewsAdapter mNewsAdapter;
 
-    public static NewsFragment newInstance(@NonNull ArrayList<NewsModel> newsModels) {
+    public static NewsFragment newInstance(@NonNull ArticleContentType type) {
         final Bundle args = new Bundle();
-        args.putParcelableArrayList(NEWS_ARGS, newsModels);
+        args.putParcelable(ARTICLE_TYPE_ARGS, type);
         final NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final Bundle args = getArguments();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mRoot = view.findViewById(R.id.root_container);
+        mRoot.setOnRefreshListener(() -> {
+            MapleDataModel.getInstance().fetchAllNewsData(success -> {
+                refreshNewsList();
+                mRoot.setRefreshing(false);
+            });
+        });
 
-        if (args != null) {
-            mNewsList = args.getParcelableArrayList(NEWS_ARGS);
-        }
+        mNewsRecyclerView = view.findViewById(R.id.newsRecyclerView);
+        mNewsRecyclerView.setHasFixedSize(true);
+        mNewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mNewsAdapter = new NewsAdapter();
+        mNewsRecyclerView.setAdapter(mNewsAdapter);
+
+        mNewsAdapter.setNewsItemClickListener((view1, position) -> Log.d(TAG, "onNewsItemClick: clicked " + position));
+        refreshNewsList();
     }
 
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_news, container, false);
-        if (view != null) {
-            init(view);
-            mNewsAdapter.setData(mNewsList);
-            mNewsAdapter.setNewsItemClickListener((view1, position) -> Log.d(TAG, "onNewsItemClick: clicked " + position));
-        }
-        return view;
+        return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
-    private void init(@NonNull View view) {
-        mNewsRecyclerView = view.findViewById(R.id.newsRecyclerView);
-        mNewsRecyclerView.setHasFixedSize(true);
-        mNewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mNewsAdapter = new NewsAdapter();
-        mNewsRecyclerView.setAdapter(mNewsAdapter);
+    private void refreshNewsList() {
+        final Bundle args = getArguments();
+        if (args != null) {
+            if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.FREE) {
+                mNewsList = MapleDataModel.getInstance().getFreeNewsModels();
+            } else if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.PAID) {
+                mNewsList = MapleDataModel.getInstance().getPaidNewsModels();
+            }
+            mNewsAdapter.setData(mNewsList);
+        }
     }
 }
