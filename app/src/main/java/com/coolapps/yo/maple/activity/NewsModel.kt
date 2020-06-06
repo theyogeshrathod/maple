@@ -9,4 +9,14 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class NewsModel (val id: String, val newsType: ArticleContentType, val title: String, val description: String, val imagePath: String) : Parcelable
+data class NewsModel (
+    val id: String,
+    val newsType: ArticleContentType,
+    val title: String,
+    val description: String,
+    val imageUri: String,
+    val isDebug: String,
+    val timeInMillis: String,
+    val isPendingForApproval: String,
+    val interestAreas: String
+) : Parcelable

@@ -44,6 +44,7 @@ public class LoadingFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBall1 = view.findViewById(R.id.ball1);
+        setCancelable(false);
     }
 
     @Override

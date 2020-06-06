@@ -41,4 +41,13 @@ public class MapleAlerts {
         dialog.setPositiveButton(R.string.ok_text, okButtonListener);
         return dialog;
     }
+
+    public static AlertDialog.Builder createSuccessfullyUploadedAlert(
+            @NonNull Context context, @Nullable DialogInterface.OnClickListener okButtonListener) {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setMessage(R.string.successfully_uploaded_image_text);
+        dialog.setCancelable(false);
+        dialog.setPositiveButton(R.string.ok_text, okButtonListener);
+        return dialog;
+    }
 }

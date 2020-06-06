@@ -21,7 +21,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
 
-            <EditText
+            <com.coolapps.yo.maple.widget.MapleEditText
                 android:layout_weight="3"
                 style="@style/plain_text_style"
                 android:id="@+id/title_edit_text"
@@ -46,7 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
 
-            <EditText
+            <com.coolapps.yo.maple.widget.MapleEditText
                 android:layout_weight="3"
                 android:id="@+id/description_edit_text"
                 android:layout_width="0dp"
@@ -60,6 +60,65 @@
         <LinearLayout
             android:layout_marginTop="@dimen/standard_margin_between_views"
             android:layout_below="@+id/description_container"
+            android:id="@+id/interest_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/article_interest_area_text"
+                android:layout_weight="1"
+                style="@style/plain_text_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <com.coolapps.yo.maple.widget.MapleEditText
+                android:layout_weight="3"
+                android:id="@+id/article_interest_area_edit_text"
+                android:layout_width="0dp"
+                style="@style/plain_text_style"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                tools:ignore="LabelFor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/article_type_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/interest_container"
+            android:layout_marginTop="@dimen/standard_margin_between_views">
+
+            <TextView
+                style="@style/plain_text_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/article_type_text" />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/free_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/free_text" />
+
+                <RadioButton
+                    android:id="@+id/paid_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/paid_text" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/standard_margin_between_views"
+            android:layout_below="@+id/article_type_container"
             android:id="@+id/image_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -81,7 +140,7 @@
             <TextView
                 android:visibility="gone"
                 android:layout_weight="3"
-                android:id="@+id/image_path_text"
+                android:id="@+id/image_uploaded_text"
                 android:layout_width="0dp"
                 android:text="@string/uploaded_image_text"
                 android:layout_height="wrap_content" />
@@ -89,7 +148,7 @@
 
         <com.coolapps.yo.maple.widget.MapleButton
             android:id="@+id/submit_button"
-            android:layout_marginTop="@dimen/standard_margin_between_views"
+            android:layout_marginTop="@dimen/margin20"
             android:layout_width="match_parent"
             android:layout_height="@dimen/maple_button_height"
             android:layout_below="@+id/image_container"

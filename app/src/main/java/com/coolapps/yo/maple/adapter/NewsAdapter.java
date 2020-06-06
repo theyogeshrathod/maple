@@ -83,11 +83,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 mCardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.premiumCardBackground));
             }
 
-            if (newsModel.getImagePath().isEmpty()) {
+            if (newsModel.getImageUri().isEmpty()) {
                 mNewsImage.setVisibility(View.GONE);
             } else {
                 Glide.with(itemView)
-                        .load(newsModel.getImagePath())
+                        .load(newsModel.getImageUri())
                         .placeholder(R.drawable.preview_image)
                         .into(mNewsImage);
             }
