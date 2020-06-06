@@ -48,6 +48,6 @@
     <string name="article_type_text">Article type</string>
     <string name="free_text">Free</string>
     <string name="paid_text">Paid</string>
-    <string name="article_interest_area_text">Interest area</string>
+    <string name="article_interest_area_text">Interest</string>
     <string name="sample_date">Date : 07-06-2020</string>
 </resources>
