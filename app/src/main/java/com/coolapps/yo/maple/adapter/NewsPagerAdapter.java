@@ -9,9 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.coolapps.yo.maple.ArticleContentType;
 import com.coolapps.yo.maple.MockNewsData;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.fragment.NewsFragment;
+
+import com.coolapps.yo.maple.MapleDataModel;
+import com.coolapps.yo.maple.activity.NewsModel;
+
+import java.util.ArrayList;
 
 /*
 * NewsPager adapter for news tabs
@@ -32,13 +38,12 @@ public class NewsPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        final MockNewsData mockNewsData = new MockNewsData();
         if (position == 0) {
-            return NewsFragment.newInstance(mockNewsData.getFreeNewsData());
+            return NewsFragment.newInstance(ArticleContentType.FREE);
         } else if (position == 1) {
-            return NewsFragment.newInstance(mockNewsData.getPremiumNewsData());
+            return NewsFragment.newInstance(ArticleContentType.PAID);
         }
-        return NewsFragment.newInstance(mockNewsData.getFreeNewsData());
+        return NewsFragment.newInstance(ArticleContentType.FREE);
     }
 
     @Nullable

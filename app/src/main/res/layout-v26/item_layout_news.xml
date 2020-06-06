@@ -46,6 +46,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
+            android:id="@+id/see_full_article_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/newsDescription"

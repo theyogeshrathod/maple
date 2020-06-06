@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.coolapps.yo.maple.LoginManager;
 import com.coolapps.yo.maple.MapleAlerts;
+import com.coolapps.yo.maple.MapleDataModel;
 import com.coolapps.yo.maple.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -39,7 +40,7 @@ public class LoginActivity extends BaseActivity {
 
         setToolbarTitle(R.string.login_title);
         if (LoginManager.getLoggedInUser() != null) {
-            launchHomeActivity();
+            MapleDataModel.getInstance().fetchAllNewsData(success -> launchNewsActivity());
         } else {
             showSignUi();
         }
@@ -67,7 +68,7 @@ public class LoginActivity extends BaseActivity {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     Log.d(TAG, "Logged in successfully with user: " + user + ", response: "  + response);
-                    launchHomeActivity();
+                    MapleDataModel.getInstance().fetchAllNewsData(success -> launchNewsActivity());
                 } else {
                     Log.d(TAG, "User is null. " + "response: "  + response);
                     showSomethingWentWrongAlert();
@@ -85,11 +86,16 @@ public class LoginActivity extends BaseActivity {
         finish();
     }
 
+    private void launchNewsActivity() {
+        final Intent intent = new Intent(this, NewsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void showSomethingWentWrongAlert() {
         MapleAlerts.createSomethingWentWrongAlert(
                 this,
                 (dialog, which) -> LoginManager.signOut(LoginActivity.this)
         ).show();
-
     }
 }
