@@ -32,6 +32,9 @@ public class LoginActivity extends BaseActivity {
     private static final String COLLECTION_USER_TYPE = "UserType";
     private static final String USER_TYPE = "Type";
 
+    private boolean mFirstBatchFreeNewsFetched = false;
+    private boolean mFirstBatchPaidNewsFetched = false;
+
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
     @Override
@@ -40,9 +43,15 @@ public class LoginActivity extends BaseActivity {
 
         setToolbarTitle(R.string.login_title);
         if (LoginManager.getLoggedInUser() != null) {
-            MapleDataModel.getInstance().fetchAllNewsData(success -> launchNewsActivity());
+            fetchFirstBatchOfFreeAndPaidData();
         } else {
             showSignUi();
+        }
+    }
+
+    private void checkLaunchHomeScreen() {
+        if (mFirstBatchFreeNewsFetched && mFirstBatchPaidNewsFetched) {
+            launchNewsActivity();
         }
     }
 
@@ -68,7 +77,7 @@ public class LoginActivity extends BaseActivity {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     Log.d(TAG, "Logged in successfully with user: " + user + ", response: "  + response);
-                    MapleDataModel.getInstance().fetchAllNewsData(success -> launchNewsActivity());
+                    fetchFirstBatchOfFreeAndPaidData();
                 } else {
                     Log.d(TAG, "User is null. " + "response: "  + response);
                     showSomethingWentWrongAlert();
@@ -97,5 +106,16 @@ public class LoginActivity extends BaseActivity {
                 this,
                 (dialog, which) -> LoginManager.signOut(LoginActivity.this)
         ).show();
+    }
+
+    private void fetchFirstBatchOfFreeAndPaidData() {
+        MapleDataModel.getInstance().fetchFirstBatchFreeNewsData(success -> {
+            mFirstBatchFreeNewsFetched = true;
+            checkLaunchHomeScreen();
+        });
+        MapleDataModel.getInstance().fetchFirstBatchPaidNewsData(success -> {
+            mFirstBatchPaidNewsFetched = true;
+            checkLaunchHomeScreen();
+        });
     }
 }

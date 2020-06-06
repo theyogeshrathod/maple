@@ -32,6 +32,8 @@ public class NewsFragment extends BaseFragment {
     private RecyclerView mNewsRecyclerView;
     private List<NewsModel> mNewsList = new ArrayList<>();
     private NewsAdapter mNewsAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private boolean mLoading = false;
 
     public static NewsFragment newInstance(@NonNull ArticleContentType type) {
         final Bundle args = new Bundle();
@@ -46,21 +48,33 @@ public class NewsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mRoot = view.findViewById(R.id.root_container);
         mRoot.setOnRefreshListener(() -> {
-            MapleDataModel.getInstance().fetchAllNewsData(success -> {
+            MapleDataModel.getInstance().fetchFirstBatchFreeNewsData(success -> {
                 refreshNewsList();
                 mRoot.setRefreshing(false);
             });
         });
 
         mNewsRecyclerView = view.findViewById(R.id.newsRecyclerView);
-        mNewsRecyclerView.setHasFixedSize(true);
-        mNewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mNewsRecyclerView.setLayoutManager(mLayoutManager);
 
         mNewsAdapter = new NewsAdapter();
         mNewsRecyclerView.setAdapter(mNewsAdapter);
 
         mNewsAdapter.setNewsItemClickListener((view1, position) -> Log.d(TAG, "onNewsItemClick: clicked " + position));
         refreshNewsList();
+
+        mNewsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                final int totalItemCount = mLayoutManager.getItemCount();
+                final int lastVisibleItemPos = mLayoutManager.findLastCompletelyVisibleItemPosition();
+                if (!mLoading && totalItemCount <= lastVisibleItemPos + 1) {
+                    fetchMoreNews();
+                }
+            }
+        });
     }
 
     @Override
@@ -79,6 +93,25 @@ public class NewsFragment extends BaseFragment {
                 mNewsList = MapleDataModel.getInstance().getPaidNewsModels();
             }
             mNewsAdapter.setData(mNewsList);
+        }
+    }
+
+    private void fetchMoreNews() {
+        mLoading = true;
+
+        final Bundle args = getArguments();
+        if (args != null) {
+            if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.FREE) {
+                MapleDataModel.getInstance().fetchNextBatchFreeNewsData(success -> {
+                    refreshNewsList();
+                    mLoading = false;
+                });
+            } else if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.PAID) {
+                MapleDataModel.getInstance().fetchNextBatchPaidNewsData(success -> {
+                    refreshNewsList();
+                    mLoading = false;
+                });
+            }
         }
     }
 }
