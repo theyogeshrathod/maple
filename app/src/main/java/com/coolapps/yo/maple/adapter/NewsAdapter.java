@@ -90,7 +90,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             mNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
 
             if (newsModel.getNewsType() == ArticleContentType.FREE) {
-                mCardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.white));
+                mCardView.setBackground(itemView.getResources().getDrawable(R.drawable.background_free_news));
             } else {
                 mCardView.setBackground(itemView.getResources().getDrawable(R.drawable.background_premium_news));
             }

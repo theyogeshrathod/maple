@@ -3,9 +3,8 @@
     android:shape="rectangle">
     <gradient
         android:angle="135"
-        android:centerColor="@color/lightYellow"
         android:endColor="@color/white"
-        android:startColor="@color/premiumCardBackground"
+        android:startColor="@color/light_gray"
         android:type="linear" />
     <corners android:radius="@dimen/card_corner_radius"/>
 </shape>
