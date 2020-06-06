@@ -26,7 +26,7 @@
     <string name="dummy_text">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.</string>
     <string name="news_image">News Image</string>
     <string name="click_to_view">Click to view</string>
-    <string name="hang_on_text">Hang on...</string>
+    <string name="processing_text">Processing...</string>
     <string name="something_went_wrong_text">Something went wrong</string>
     <string name="title_text">Title</string>
     <string name="description_text">Description</string>
@@ -34,6 +34,7 @@
     <string name="image_text">Image</string>
     <string name="upload_image_text">Upload image</string>
     <string name="uploaded_image_text">Image uploaded</string>
+    <string name="successfully_uploaded_image_text">Image uploaded successfully</string>
     <string name="successfully_submitted_text">Submitted successfully!</string>
     <string name="pending_for_approvals_text">Pending for Approvals</string>
     <string name="approve_text">Approve</string>
@@ -44,4 +45,8 @@
     <string name="italic_text">Italic</string>
     <string name="bold_text">Bold</string>
     <string name="underline_text">Underline</string>
+    <string name="article_type_text">Article type</string>
+    <string name="free_text">Free</string>
+    <string name="paid_text">Paid</string>
+    <string name="article_interest_area_text">Interest area</string>
 </resources>
