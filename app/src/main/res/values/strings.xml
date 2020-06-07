@@ -50,4 +50,6 @@
     <string name="paid_text">Paid</string>
     <string name="article_interest_area_text">Interest</string>
     <string name="sample_date">Date : 07-06-2020</string>
+    <string name="see_more_text">See more</string>
+    <string name="see_less_text">See less</string>
 </resources>

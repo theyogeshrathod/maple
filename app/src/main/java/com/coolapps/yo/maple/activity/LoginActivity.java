@@ -109,11 +109,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void fetchFirstBatchOfFreeAndPaidData() {
-        MapleDataModel.getInstance().fetchFirstBatchFreeNewsData(success -> {
+        MapleDataModel.getInstance().fetchFirstBatchFreeNewsData((success, newsModels) -> {
             mFirstBatchFreeNewsFetched = true;
             checkLaunchHomeScreen();
         });
-        MapleDataModel.getInstance().fetchFirstBatchPaidNewsData(success -> {
+        MapleDataModel.getInstance().fetchFirstBatchPaidNewsData((success, newsModels) -> {
             mFirstBatchPaidNewsFetched = true;
             checkLaunchHomeScreen();
         });

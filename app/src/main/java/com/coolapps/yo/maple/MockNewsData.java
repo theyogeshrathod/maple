@@ -1,9 +1,6 @@
 package com.coolapps.yo.maple;
 
-import com.coolapps.yo.maple.activity.NewsModel;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.coolapps.yo.maple.ArticleContentType.FREE;
 import static com.coolapps.yo.maple.ArticleContentType.PAID;

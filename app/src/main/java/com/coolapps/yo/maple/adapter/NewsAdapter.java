@@ -16,7 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.coolapps.yo.maple.ArticleContentType;
 import com.coolapps.yo.maple.R;
-import com.coolapps.yo.maple.activity.NewsModel;
+import com.coolapps.yo.maple.NewsModel;
 import com.coolapps.yo.maple.interfaces.NewsItemClickListener;
 import com.coolapps.yo.maple.util.GetDateFromTimestamp;
 
@@ -45,6 +45,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         mNewsModelList.clear();
         mNewsModelList.addAll(newsModelList);
         notifyDataSetChanged();
+    }
+
+    public void addData(@NonNull List<NewsModel> newsModelList) {
+        final int prevSize = mNewsModelList.size();
+        mNewsModelList.addAll(newsModelList);
+        notifyItemRangeInserted(prevSize, newsModelList.size());
     }
 
     @Override
