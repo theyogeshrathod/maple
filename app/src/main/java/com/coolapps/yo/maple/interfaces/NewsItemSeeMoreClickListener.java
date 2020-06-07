@@ -5,6 +5,6 @@ import android.view.View;
 /**
  * Interface for recycler view item click
  */
-public interface NewsItemSeeLessClickListener {
-    void onNewsItemClick(View view, int position);
+public interface NewsItemSeeMoreClickListener {
+    void onNewsItemClick(View view, int position, boolean isSeeMore);
 }

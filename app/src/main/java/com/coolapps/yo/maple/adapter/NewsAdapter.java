@@ -17,7 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.coolapps.yo.maple.ArticleContentType;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.NewsModel;
-import com.coolapps.yo.maple.interfaces.NewsItemSeeLessClickListener;
+import com.coolapps.yo.maple.interfaces.NewsItemSeeMoreClickListener;
 import com.coolapps.yo.maple.util.GetDateFromTimestamp;
 
 import java.util.ArrayList;
@@ -29,10 +29,10 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private List<NewsModelItem> mNewsModelList = new ArrayList<>();
-    private NewsItemSeeLessClickListener mNewsItemSeeLessClickListener;
+    private NewsItemSeeMoreClickListener mNewsItemSeeMoreClickListener;
 
-    public void setNewsItemSeeLessClickListener(@NonNull NewsItemSeeLessClickListener newsItemSeeLessClickListener) {
-        mNewsItemSeeLessClickListener = newsItemSeeLessClickListener;
+    public void setNewsItemSeeLessClickListener(@NonNull NewsItemSeeMoreClickListener newsItemSeeMoreClickListener) {
+        mNewsItemSeeMoreClickListener = newsItemSeeMoreClickListener;
     }
 
     @NonNull
@@ -67,11 +67,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         holder.mSeeFullArticle.setOnClickListener(v -> {
             final boolean isExpanded = mNewsModelList.get(position).isExpanded();
-            mNewsModelList.get(position).setExpanded(!isExpanded);
-            notifyItemChanged(position);
 
-            if (mNewsItemSeeLessClickListener != null && isExpanded) {
-                mNewsItemSeeLessClickListener.onNewsItemClick(v, holder.getAdapterPosition());
+            // TODO: Check subscription for Premium
+            if (mNewsModelList.get(position).getNewsModel().getNewsType() == ArticleContentType.FREE) {
+                mNewsModelList.get(position).setExpanded(!isExpanded);
+                notifyItemChanged(position);
+            }
+
+            if (mNewsItemSeeMoreClickListener != null) {
+                mNewsItemSeeMoreClickListener.onNewsItemClick(v, holder.getAdapterPosition(), !isExpanded);
             }
         });
     }

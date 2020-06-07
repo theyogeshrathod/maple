@@ -50,4 +50,17 @@ public class MapleAlerts {
         dialog.setPositiveButton(R.string.ok_text, okButtonListener);
         return dialog;
     }
+
+    public static AlertDialog.Builder createNoSubscriptionAlert(
+            @NonNull Context context, @Nullable DialogInterface.OnClickListener freeTrialButtonListener,
+            @Nullable DialogInterface.OnClickListener premiumButtonListener,
+            @Nullable DialogInterface.OnClickListener cancelButtonListener) {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setMessage(R.string.no_subscription_alert_text);
+        dialog.setCancelable(false);
+        dialog.setPositiveButton(R.string.take_free_trial_text, freeTrialButtonListener);
+        dialog.setNegativeButton(R.string.buy_premium_text, premiumButtonListener);
+        dialog.setNeutralButton(R.string.cancel_text, cancelButtonListener);
+        return dialog;
+    }
 }
