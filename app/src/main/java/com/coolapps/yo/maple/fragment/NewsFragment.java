@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.coolapps.yo.maple.ArticleContentType;
+import com.coolapps.yo.maple.MapleAlerts;
 import com.coolapps.yo.maple.MapleDataModel;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.NewsModel;
@@ -69,10 +70,24 @@ public class NewsFragment extends BaseFragment {
         mNewsAdapter = new NewsAdapter();
         mNewsRecyclerView.setAdapter(mNewsAdapter);
 
-        mNewsAdapter.setNewsItemSeeLessClickListener((view1, position) -> {
+        mNewsAdapter.setNewsItemSeeLessClickListener((view1, position, isSeeMore) -> {
             Log.d(TAG, "onNewsItemClick: clicked " + position);
-            mNewsRecyclerView.smoothScrollToPosition(position);
+
+            final Bundle args = getArguments();
+            if (args != null) {
+                if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.PAID) {
+                    // TODO: Check if has subscription before showing alert
+                    if (isSeeMore) {
+                        MapleAlerts.createNoSubscriptionAlert(requireContext(), null, null, null).show();
+                    }
+                } else if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.FREE) {
+                    if (!isSeeMore) {
+                        mNewsRecyclerView.smoothScrollToPosition(position);
+                    }
+                }
+            }
         });
+
         refreshNewsList();
 
         mNewsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
