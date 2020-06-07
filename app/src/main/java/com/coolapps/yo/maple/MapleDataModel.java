@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.coolapps.yo.maple.activity.NewsModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,7 +33,7 @@ public class MapleDataModel {
     private Query mPaidNewsFetchQuery;
 
     public interface OnFetchNewsDataListener {
-        void onDataFetchComplete(boolean success);
+        void onDataFetchComplete(boolean success, @NonNull List<NewsModel> newsModels);
     }
 
     /**
@@ -63,7 +62,7 @@ public class MapleDataModel {
         mFreeNewsFetchQuery = mFirestore.collection("Articles")
                 .whereEqualTo("articleType", "0")
                 .orderBy("timeInMillis", Query.Direction.DESCENDING)
-                .limit(10);
+                .limit(15);
         fetchFreeNewsAndProcess(listener);
     }
 
@@ -88,7 +87,7 @@ public class MapleDataModel {
         mPaidNewsFetchQuery = mFirestore.collection("Articles")
                 .whereEqualTo("articleType", "1")
                 .orderBy("timeInMillis", Query.Direction.DESCENDING)
-                .limit(10);
+                .limit(15);
         fetchPaidNewsAndProcess(listener);
     }
 
@@ -128,11 +127,11 @@ public class MapleDataModel {
                         mLastFetchedFreeNewsDoc = snapshot;
                     }
                     mFreeNewsModels.addAll(list);
-                    listener.onDataFetchComplete(true);
+                    listener.onDataFetchComplete(true, list);
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Failed to get data", e);
-                    listener.onDataFetchComplete(false);
+                    listener.onDataFetchComplete(false, new ArrayList<>());
                 });
     }
 
@@ -161,11 +160,11 @@ public class MapleDataModel {
                         mLastFetchedPaidNewsDoc = snapshot;
                     }
                     mPaidNewsModels.addAll(list);
-                    listener.onDataFetchComplete(true);
+                    listener.onDataFetchComplete(true, list);
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Failed to get data", e);
-                    listener.onDataFetchComplete(false);
+                    listener.onDataFetchComplete(false, new ArrayList<>());
                 });
     }
 

@@ -1,7 +1,6 @@
-package com.coolapps.yo.maple.activity
+package com.coolapps.yo.maple
 
 import android.os.Parcelable
-import com.coolapps.yo.maple.ArticleContentType
 import kotlinx.android.parcel.Parcelize
 
 /**

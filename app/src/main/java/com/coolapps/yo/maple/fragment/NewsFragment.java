@@ -15,7 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.coolapps.yo.maple.ArticleContentType;
 import com.coolapps.yo.maple.MapleDataModel;
 import com.coolapps.yo.maple.R;
-import com.coolapps.yo.maple.activity.NewsModel;
+import com.coolapps.yo.maple.NewsModel;
 import com.coolapps.yo.maple.adapter.NewsAdapter;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class NewsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mRoot = view.findViewById(R.id.root_container);
         mRoot.setOnRefreshListener(() -> {
-            MapleDataModel.getInstance().fetchFirstBatchFreeNewsData(success -> {
+            MapleDataModel.getInstance().fetchFirstBatchFreeNewsData((success, newsModels) -> {
                 refreshNewsList();
                 mRoot.setRefreshing(false);
             });
@@ -96,19 +96,24 @@ public class NewsFragment extends BaseFragment {
         }
     }
 
+    private void refreshNewsList(@NonNull List<NewsModel> newsModels) {
+        mNewsList.addAll(newsModels);
+        mNewsAdapter.addData(newsModels);
+    }
+
     private void fetchMoreNews() {
         mLoading = true;
 
         final Bundle args = getArguments();
         if (args != null) {
             if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.FREE) {
-                MapleDataModel.getInstance().fetchNextBatchFreeNewsData(success -> {
-                    refreshNewsList();
+                MapleDataModel.getInstance().fetchNextBatchFreeNewsData((success, newsModels) -> {
+                    refreshNewsList(newsModels);
                     mLoading = false;
                 });
             } else if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.PAID) {
-                MapleDataModel.getInstance().fetchNextBatchPaidNewsData(success -> {
-                    refreshNewsList();
+                MapleDataModel.getInstance().fetchNextBatchPaidNewsData((success, newsModels) -> {
+                    refreshNewsList(newsModels);
                     mLoading = false;
                 });
             }

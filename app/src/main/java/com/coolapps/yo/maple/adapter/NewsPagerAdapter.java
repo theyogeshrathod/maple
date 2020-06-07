@@ -10,14 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.coolapps.yo.maple.ArticleContentType;
-import com.coolapps.yo.maple.MockNewsData;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.fragment.NewsFragment;
-
-import com.coolapps.yo.maple.MapleDataModel;
-import com.coolapps.yo.maple.activity.NewsModel;
-
-import java.util.ArrayList;
 
 /*
 * NewsPager adapter for news tabs
