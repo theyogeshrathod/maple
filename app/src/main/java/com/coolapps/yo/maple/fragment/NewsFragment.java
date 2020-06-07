@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.coolapps.yo.maple.ArticleContentType;
@@ -55,13 +56,23 @@ public class NewsFragment extends BaseFragment {
         });
 
         mNewsRecyclerView = view.findViewById(R.id.newsRecyclerView);
+        mNewsRecyclerView.setHasFixedSize(true);
+
+        final SimpleItemAnimator itemAnimator = (SimpleItemAnimator) mNewsRecyclerView.getItemAnimator();
+        if (itemAnimator != null) {
+            itemAnimator.setSupportsChangeAnimations(false);
+        }
+
         mLayoutManager = new LinearLayoutManager(getActivity());
         mNewsRecyclerView.setLayoutManager(mLayoutManager);
 
         mNewsAdapter = new NewsAdapter();
         mNewsRecyclerView.setAdapter(mNewsAdapter);
 
-        mNewsAdapter.setNewsItemClickListener((view1, position) -> Log.d(TAG, "onNewsItemClick: clicked " + position));
+        mNewsAdapter.setNewsItemSeeLessClickListener((view1, position) -> {
+            Log.d(TAG, "onNewsItemClick: clicked " + position);
+            mNewsRecyclerView.smoothScrollToPosition(position);
+        });
         refreshNewsList();
 
         mNewsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
