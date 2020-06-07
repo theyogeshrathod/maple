@@ -17,7 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.coolapps.yo.maple.ArticleContentType;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.NewsModel;
-import com.coolapps.yo.maple.interfaces.NewsItemClickListener;
+import com.coolapps.yo.maple.interfaces.NewsItemSeeLessClickListener;
 import com.coolapps.yo.maple.util.GetDateFromTimestamp;
 
 import java.util.ArrayList;
@@ -28,11 +28,11 @@ import java.util.List;
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
-    private List<NewsModel> mNewsModelList = new ArrayList<>();
-    private NewsItemClickListener mNewsItemClickListener;
+    private List<NewsModelItem> mNewsModelList = new ArrayList<>();
+    private NewsItemSeeLessClickListener mNewsItemSeeLessClickListener;
 
-    public void setNewsItemClickListener(@NonNull NewsItemClickListener newsItemClickListener) {
-        mNewsItemClickListener = newsItemClickListener;
+    public void setNewsItemSeeLessClickListener(@NonNull NewsItemSeeLessClickListener newsItemSeeLessClickListener) {
+        mNewsItemSeeLessClickListener = newsItemSeeLessClickListener;
     }
 
     @NonNull
@@ -43,13 +43,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     public void setData(@NonNull List<NewsModel> newsModelList) {
         mNewsModelList.clear();
-        mNewsModelList.addAll(newsModelList);
+        final List<NewsModelItem> newsModelItems = new ArrayList<>();
+        for (NewsModel newsModel: newsModelList) {
+            newsModelItems.add(new NewsModelItem(newsModel, false));
+        }
+        mNewsModelList.addAll(newsModelItems);
         notifyDataSetChanged();
     }
 
     public void addData(@NonNull List<NewsModel> newsModelList) {
         final int prevSize = mNewsModelList.size();
-        mNewsModelList.addAll(newsModelList);
+        final List<NewsModelItem> newsModelItems = new ArrayList<>();
+        for (NewsModel newsModel: newsModelList) {
+            newsModelItems.add(new NewsModelItem(newsModel, false));
+        }
+        mNewsModelList.addAll(newsModelItems);
         notifyItemRangeInserted(prevSize, newsModelList.size());
     }
 
@@ -57,11 +65,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(mNewsModelList.get(position));
 
-        holder.itemView.setOnClickListener(v -> {
-            holder.seeFullArticle();
+        holder.mSeeFullArticle.setOnClickListener(v -> {
+            final boolean isExpanded = mNewsModelList.get(position).isExpanded();
+            mNewsModelList.get(position).setExpanded(!isExpanded);
+            notifyItemChanged(position);
 
-            if (mNewsItemClickListener != null) {
-                mNewsItemClickListener.onNewsItemClick(v, holder.getAdapterPosition());
+            if (mNewsItemSeeLessClickListener != null && isExpanded) {
+                mNewsItemSeeLessClickListener.onNewsItemClick(v, holder.getAdapterPosition());
             }
         });
     }
@@ -76,7 +86,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         private ImageView mNewsImage;
         private TextView mNewsTitle;
         private TextView mNewsDate;
-        private TextView mNewsDescription;
+        private TextView mShortNewsDescription;
+        private TextView mFullNewsDescription;
         private TextView mSeeFullArticle;
 
         ViewHolder(@NonNull View itemView) {
@@ -85,15 +96,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             mNewsImage = itemView.findViewById(R.id.newsImage);
             mNewsTitle = itemView.findViewById(R.id.newsTitle);
             mNewsDate = itemView.findViewById(R.id.newsDate);
-            mNewsDescription = itemView.findViewById(R.id.newsDescription);
+            mShortNewsDescription = itemView.findViewById(R.id.shortNewsDescription);
+            mFullNewsDescription = itemView.findViewById(R.id.fullNewsDescription);
             mSeeFullArticle = itemView.findViewById(R.id.see_full_article_text_view);
         }
 
-        void bind(@NonNull NewsModel newsModel) {
+        void bind(@NonNull NewsModelItem newsModelItem) {
+            final NewsModel newsModel = newsModelItem.getNewsModel();
             mNewsTitle.setText(Html.fromHtml(newsModel.getTitle()));
             final String date = GetDateFromTimestamp.getDate(Long.parseLong(newsModel.getTimeInMillis()));
             mNewsDate.setText(date);
-            mNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
+            mShortNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
+            mFullNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
 
             if (newsModel.getNewsType() == ArticleContentType.FREE) {
                 mCardView.setBackground(itemView.getResources().getDrawable(R.drawable.background_free_news));
@@ -111,11 +125,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                         .apply(requestOptions)
                         .into(mNewsImage);
             }
-        }
-
-        void seeFullArticle() {
-            mNewsDescription.setMaxLines(Integer.MAX_VALUE);
-            mSeeFullArticle.setVisibility(View.INVISIBLE);
+            if (newsModelItem.isExpanded()) {
+                mShortNewsDescription.setVisibility(View.GONE);
+                mFullNewsDescription.setVisibility(View.VISIBLE);
+                mSeeFullArticle.setText(R.string.see_less_text);
+            } else {
+                mShortNewsDescription.setVisibility(View.VISIBLE);
+                mFullNewsDescription.setVisibility(View.GONE);
+                mSeeFullArticle.setText(R.string.see_more_text);
+            }
         }
     }
 }
