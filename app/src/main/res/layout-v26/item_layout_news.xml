@@ -11,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.coolapps.yo.maple.widget.MapleImageView
             android:id="@+id/newsImage"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/news_image_height"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:background="@drawable/preview_image"
             android:contentDescription="@string/news_image"
             android:outlineProvider="bounds"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:aspectRatio="1.77" />
 
         <TextView
             android:id="@+id/newsTitle"
