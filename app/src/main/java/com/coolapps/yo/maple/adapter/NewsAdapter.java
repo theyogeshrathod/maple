@@ -4,7 +4,6 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +18,7 @@ import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.NewsModel;
 import com.coolapps.yo.maple.interfaces.NewsItemSeeMoreClickListener;
 import com.coolapps.yo.maple.util.GetDateFromTimestamp;
+import com.coolapps.yo.maple.widget.MapleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +87,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView mCardView;
-        private ImageView mNewsImage;
+        private MapleImageView mNewsImage;
         private TextView mNewsTitle;
         private TextView mNewsDate;
         private TextView mShortNewsDescription;
