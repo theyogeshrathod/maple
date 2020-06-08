@@ -32,4 +32,12 @@
     <dimen name="article_list_view_padding_bottom">5dp</dimen>
     <dimen name="article_item_padding_start">10dp</dimen>
     <dimen name="article_item_padding_end">10dp</dimen>
+    <dimen name="profile_card_dimension">100dp</dimen>
+    <dimen name="profile_card_radius">50dp</dimen>
+    <dimen name="margin1">1dp</dimen>
+    <dimen name="choose_pop_up_height">300dp</dimen>
+    <dimen name="choose_recycler_height">200dp</dimen>
+    <dimen name="textSize14">14sp</dimen>
+    <dimen name="textSize16">16sp</dimen>
+    <dimen name="textSize13">13sp</dimen>
 </resources>

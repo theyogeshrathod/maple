@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +16,7 @@ import com.coolapps.yo.maple.MapleDataModel;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.adapter.ArticlesAdapter;
 import com.coolapps.yo.maple.adapter.NewsPagerAdapter;
+import com.coolapps.yo.maple.model.TagInterests;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class UserHomeFragment extends BaseFragment {
         mArticlesRecyclerView = view.findViewById(R.id.articlesRecyclerView);
 
         final ArticlesAdapter articlesAdapter = new ArticlesAdapter();
-        final List<String> tagsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
+        final List<TagInterests> tagsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
         articlesAdapter.setTagsList(tagsList);
         mArticlesRecyclerView.setAdapter(articlesAdapter);
 

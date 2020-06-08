@@ -1,6 +1,5 @@
 package com.coolapps.yo.maple.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +36,13 @@ public class HomeSettingsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 LoginManager.signOut(requireContext());
+            }
+        });
+
+        view.findViewById(R.id.textProfile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new ProfileFragment());
             }
         });
     }

@@ -1,13 +1,9 @@
 package com.coolapps.yo.maple.util;
 
-import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * This method returns date from timestamp.

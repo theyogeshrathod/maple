@@ -4,12 +4,14 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.coolapps.yo.maple.model.TagInterests;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,14 +37,14 @@ public class MapleDataModel {
     private Query mFreeNewsFetchQuery;
     private Query mPaidNewsFetchQuery;
 
-    private Set<String> mAvailableTags = new TreeSet<>();
+    private List<TagInterests> mAvailableTags = new ArrayList<>();
 
     public interface OnFetchNewsDataListener {
         void onDataFetchComplete(boolean success, @NonNull List<NewsModel> newsModels);
     }
 
     public interface OnArticleTagsFetchListener {
-        void onTagsFetched(boolean success, @NonNull Set<String> tags);
+        void onTagsFetched(boolean success, @NonNull List<TagInterests> tags);
     }
 
     /**
@@ -182,17 +184,24 @@ public class MapleDataModel {
         mFirestore.collection("ArticleTags").orderBy("name").get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        mAvailableTags.add((String) snapshot.get("name"));
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            TagInterests tagInterests = new TagInterests();
+                            final String id = (String) snapshot.get("id");
+                            final String name = (String) snapshot.get("name");
+                            tagInterests.setId(id);
+                            tagInterests.setTagName(name);
+                            mAvailableTags.add(tagInterests);
+                        }
                     }
                     listener.onTagsFetched(true, mAvailableTags);
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Failed to get data", e);
-                    listener.onTagsFetched(false, Collections.emptySet());
+                    listener.onTagsFetched(false, mAvailableTags);
                 });
     }
 
-    public Set<String> getAvailableTags() {
+    public List<TagInterests> getAvailableTags() {
         return mAvailableTags;
     }
 
