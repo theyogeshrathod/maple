@@ -34,6 +34,7 @@ public class LoginActivity extends BaseActivity {
 
     private boolean mFirstBatchFreeNewsFetched = false;
     private boolean mFirstBatchPaidNewsFetched = false;
+    private boolean mAllArticleTagsFetched = false;
 
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
@@ -43,14 +44,14 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.login_activity_layout);
         setToolbarTitle(R.string.login_title);
         if (LoginManager.getLoggedInUser() != null) {
-            fetchFirstBatchOfFreeAndPaidData();
+            fetchAllData();
         } else {
             showSignUi();
         }
     }
 
     private void checkLaunchHomeScreen() {
-        if (mFirstBatchFreeNewsFetched && mFirstBatchPaidNewsFetched) {
+        if (mFirstBatchFreeNewsFetched && mFirstBatchPaidNewsFetched && mAllArticleTagsFetched) {
             launchNewsActivity();
         }
     }
@@ -77,7 +78,7 @@ public class LoginActivity extends BaseActivity {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     Log.d(TAG, "Logged in successfully with user: " + user + ", response: "  + response);
-                    fetchFirstBatchOfFreeAndPaidData();
+                    fetchAllData();
                 } else {
                     Log.d(TAG, "User is null. " + "response: "  + response);
                     showSomethingWentWrongAlert();
@@ -108,6 +109,11 @@ public class LoginActivity extends BaseActivity {
         ).show();
     }
 
+    private void fetchAllData() {
+        fetchFirstBatchOfFreeAndPaidData();
+        fetchAllArticlesData();
+    }
+
     private void fetchFirstBatchOfFreeAndPaidData() {
         MapleDataModel.getInstance().fetchFirstBatchFreeNewsData((success, newsModels) -> {
             mFirstBatchFreeNewsFetched = true;
@@ -115,6 +121,13 @@ public class LoginActivity extends BaseActivity {
         });
         MapleDataModel.getInstance().fetchFirstBatchPaidNewsData((success, newsModels) -> {
             mFirstBatchPaidNewsFetched = true;
+            checkLaunchHomeScreen();
+        });
+    }
+
+    private void fetchAllArticlesData() {
+        MapleDataModel.getInstance().fetchAvailableTags((success, tags) -> {
+            mAllArticleTagsFetched = true;
             checkLaunchHomeScreen();
         });
     }

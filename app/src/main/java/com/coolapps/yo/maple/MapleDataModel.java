@@ -9,7 +9,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This is a central DataModel class. This holds all the data app fetches.
@@ -32,8 +35,14 @@ public class MapleDataModel {
     private Query mFreeNewsFetchQuery;
     private Query mPaidNewsFetchQuery;
 
+    private Set<String> mAvailableTags = new TreeSet<>();
+
     public interface OnFetchNewsDataListener {
         void onDataFetchComplete(boolean success, @NonNull List<NewsModel> newsModels);
+    }
+
+    public interface OnArticleTagsFetchListener {
+        void onTagsFetched(boolean success, @NonNull Set<String> tags);
     }
 
     /**
@@ -166,6 +175,25 @@ public class MapleDataModel {
                     Log.e(TAG, "Failed to get data", e);
                     listener.onDataFetchComplete(false, new ArrayList<>());
                 });
+    }
+
+    public void fetchAvailableTags(@NonNull OnArticleTagsFetchListener listener) {
+        mAvailableTags.clear();
+        mFirestore.collection("ArticleTags").orderBy("name").get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                        mAvailableTags.add((String) snapshot.get("name"));
+                    }
+                    listener.onTagsFetched(true, mAvailableTags);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to get data", e);
+                    listener.onTagsFetched(false, Collections.emptySet());
+                });
+    }
+
+    public Set<String> getAvailableTags() {
+        return mAvailableTags;
     }
 
     /**
