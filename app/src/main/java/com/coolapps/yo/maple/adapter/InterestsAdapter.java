@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.coolapps.yo.maple.R;
-import com.coolapps.yo.maple.model.TagInterests;
+import com.coolapps.yo.maple.model.TagInterestsModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.InterestViewHolder> {
 
     private static final String TAG = "InterestsAdapter";
-    private List<TagInterests> mTagsList = new ArrayList<>();
+    private List<TagInterestsModel> mTagsList = new ArrayList<>();
     private OnItemCheckListener mOnItemClick;
 
     public void setOnItemClick(OnItemCheckListener onItemClick) {
@@ -28,7 +28,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
     @NonNull
     @Override
     public InterestsAdapter.InterestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new InterestViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_choose_interest, parent));
+        return new InterestViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_choose_interest, parent,false));
     }
 
     @Override
@@ -49,16 +49,16 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         return mTagsList.size();
     }
 
-    public void setInterestsList(@NonNull List<TagInterests> list) {
+    public void setInterestsList(@NonNull List<TagInterestsModel> list) {
         mTagsList.clear();
         mTagsList.addAll(list);
         notifyDataSetChanged();
     }
 
     public interface OnItemCheckListener {
-        void onItemCheck(TagInterests tag);
+        void onItemCheck(TagInterestsModel tag);
 
-        void onItemUncheck(TagInterests tag);
+        void onItemUncheck(TagInterestsModel tag);
     }
 
     final static class InterestViewHolder extends RecyclerView.ViewHolder {
@@ -70,7 +70,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
             mInterestCheckBox.setClickable(false);
         }
 
-        void bind(TagInterests tagInterests) {
+        void bind(TagInterestsModel tagInterests) {
             Log.e(TAG, "bind: tag name " + tagInterests.getTagName());
             mInterestCheckBox.setText(tagInterests.getTagName());
         }

@@ -18,10 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.coolapps.yo.maple.LoginManager;
 import com.coolapps.yo.maple.MapleDataModel;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.adapter.InterestsAdapter;
-import com.coolapps.yo.maple.model.TagInterests;
+import com.coolapps.yo.maple.model.TagInterestsModel;
 import com.coolapps.yo.maple.util.EmailValidation;
 import com.coolapps.yo.maple.util.MobileNumberValidation;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,14 +93,14 @@ public class ProfileFragment extends BaseFragment {
 
         init(view);
 
-        final List<TagInterests> interestsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
+        final List<TagInterestsModel> interestsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
 
         mChooseInterests.setOnClickListener(v -> showInterestsSelectionPopup(interestsList));
 
         mSubmitProfile.setOnClickListener(v -> verifyInputs());
     }
 
-    private void showInterestsSelectionPopup(List<TagInterests> interestsList) {
+    private void showInterestsSelectionPopup(List<TagInterestsModel> interestsList) {
         mSelectedInterestIds.clear();
         mSelectedInterestNames.clear();
 
@@ -110,7 +111,7 @@ public class ProfileFragment extends BaseFragment {
         builder.setCancelable(true);
 
         final RecyclerView interestRecycler = view.findViewById(R.id.chooseInterestList);
-        final TextView doneText = view.findViewById(R.id.button_done);
+        final TextView doneText = view.findViewById(R.id. button_done);
         final AlertDialog alertDialog = builder.create();
 
         interestRecycler.setHasFixedSize(true);
@@ -123,13 +124,13 @@ public class ProfileFragment extends BaseFragment {
 
         adapter.setOnItemClick(new InterestsAdapter.OnItemCheckListener() {
             @Override
-            public void onItemCheck(TagInterests tag) {
+            public void onItemCheck(TagInterestsModel tag) {
                 mSelectedInterestIds.add(tag.getId());
                 mSelectedInterestNames.add(tag.getTagName());
             }
 
             @Override
-            public void onItemUncheck(TagInterests tag) {
+            public void onItemUncheck(TagInterestsModel tag) {
                 mSelectedInterestIds.remove(tag.getId());
                 mSelectedInterestNames.remove(tag.getTagName());
             }
@@ -285,7 +286,7 @@ public class ProfileFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser currentUser = LoginManager.getLoggedInUser();
         if (currentUser != null) {
             getUserInfo(currentUser);
         }

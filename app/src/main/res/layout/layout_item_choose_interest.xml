@@ -3,9 +3,7 @@
     android:id="@+id/checkboxInterest"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:button="@null"
     android:textAllCaps="true"
-    android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
     android:padding="@dimen/margin5"
     android:text="@string/business"
     android:textAppearance="@style/TextAppearance.AppCompat.Small" />

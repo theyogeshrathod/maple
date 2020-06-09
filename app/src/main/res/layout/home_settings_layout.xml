@@ -3,15 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.coolapps.yo.maple.widget.MapleButton
         android:id="@+id/textProfile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:padding="@dimen/margin5"
+        android:layout_height="@dimen/maple_button_height"
+        android:layout_marginTop="@dimen/margin10"
         android:text="@string/profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <com.coolapps.yo.maple.widget.MapleButton
