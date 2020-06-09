@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
+    <corners android:radius="@dimen/margin5" />
     <gradient
-        android:angle="135"
-        android:endColor="@color/white"
-        android:startColor="#00000000"
+        android:angle="270"
+        android:endColor="@color/premiumCardBackground"
+        android:startColor="@color/white"
         android:type="linear" />
-    <corners android:radius="@dimen/card_corner_radius"/>
 </shape>

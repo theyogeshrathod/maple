@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.coolapps.yo.maple.widget.MapleButton
-        android:id="@+id/sign_out_button"
-        android:text="@string/sign_out"
-        android:layout_marginBottom="@dimen/standard_margin_between_views"
+        android:id="@+id/textProfile"
         android:layout_width="match_parent"
         android:layout_height="@dimen/maple_button_height"
-        android:layout_alignParentBottom="true"/>
+        android:layout_marginTop="@dimen/margin10"
+        android:text="@string/profile"
+        android:textStyle="bold" />
+
+    <com.coolapps.yo.maple.widget.MapleButton
+        android:id="@+id/sign_out_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/maple_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/standard_margin_between_views"
+        android:text="@string/sign_out" />
+
 </RelativeLayout>

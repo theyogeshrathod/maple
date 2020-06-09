@@ -9,13 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.coolapps.yo.maple.R;
+import com.coolapps.yo.maple.model.TagInterestsModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder> {
 
-    private List<String> mTagsList = new ArrayList<>();
+    private List<TagInterestsModel> mTagsList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -33,7 +34,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         return mTagsList.size();
     }
 
-    public void setTagsList(@NonNull List<String> list) {
+    public void setTagsList(@NonNull List<TagInterestsModel> list) {
         mTagsList.clear();
         mTagsList.addAll(list);
         notifyDataSetChanged();
@@ -47,8 +48,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             mArticleTextView = itemView.findViewById(R.id.article_text_view);
         }
 
-        void bind(@NonNull String text) {
-            mArticleTextView.setText(String.format("#%s", text));
+        void bind(TagInterestsModel tagInterests) {
+            mArticleTextView.setText(String.format("#%s", tagInterests.getTagName()));
         }
     }
 }

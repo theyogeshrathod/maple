@@ -23,4 +23,5 @@
     <color name="lightYellow">#FDFBE8</color>
     <color name="lightPink">#FAE7E6</color>
     <color name="lightBlue">#DDEDFA</color>
+    <color name="choose_btn_color">#FF9800</color>
 </resources>

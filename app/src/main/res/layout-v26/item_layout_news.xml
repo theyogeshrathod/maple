@@ -11,17 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.coolapps.yo.maple.widget.MapleImageView
-            android:id="@+id/newsImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/preview_image"
-            android:contentDescription="@string/news_image"
-            android:outlineProvider="bounds"
-            android:scaleType="centerCrop"
-            app:aspectRatio="1.77" />
-
         <TextView
             android:id="@+id/newsTitle"
             android:layout_width="match_parent"
@@ -34,8 +23,8 @@
             android:paddingLeft="@dimen/margin5"
             android:paddingRight="@dimen/margin5"
             android:text="@string/dummy_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
+            android:textSize="@dimen/textSize16"
             android:textStyle="bold" />
 
         <TextView
@@ -47,8 +36,8 @@
             android:paddingLeft="@dimen/margin5"
             android:paddingRight="@dimen/margin5"
             android:text="@string/sample_date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/black"
+            android:textSize="@dimen/textSize13"
             android:textStyle="italic" />
 
         <TextView
@@ -63,7 +52,7 @@
             android:paddingLeft="@dimen/margin5"
             android:paddingRight="@dimen/margin5"
             android:text="@string/dummy_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textSize="@dimen/textSize14" />
 
         <TextView
             android:id="@+id/fullNewsDescription"
@@ -75,7 +64,7 @@
             android:paddingLeft="@dimen/margin5"
             android:paddingRight="@dimen/margin5"
             android:text="@string/dummy_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textSize="@dimen/textSize14" />
 
         <TextView
             android:id="@+id/see_full_article_text_view"
@@ -87,12 +76,24 @@
             android:background="@drawable/background_rounded_corners"
             android:gravity="center"
             android:paddingLeft="@dimen/margin5"
+            android:textSize="@dimen/textSize16"
             android:paddingTop="@dimen/margin2"
             android:paddingRight="@dimen/margin5"
             android:paddingBottom="@dimen/margin2"
             android:text="@string/see_more_text"
             android:textColor="@color/black"
             android:textStyle="bold" />
+
+        <com.coolapps.yo.maple.widget.MapleImageView
+            android:id="@+id/newsImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/preview_image"
+            android:contentDescription="@string/news_image"
+            android:outlineProvider="bounds"
+            android:scaleType="centerCrop"
+            app:aspectRatio="1.77" />
 
     </RelativeLayout>
 

@@ -4,12 +4,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.coolapps.yo.maple.model.TagInterestsModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -20,10 +21,8 @@ import java.util.TreeSet;
  */
 public class MapleDataModel {
 
-    private static volatile MapleDataModel sInstance = null;
-
     private static final String TAG = "MapleDataModel";
-
+    private static volatile MapleDataModel sInstance = null;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
     private List<NewsModel> mFreeNewsModels = new ArrayList<>();
@@ -35,20 +34,13 @@ public class MapleDataModel {
     private Query mFreeNewsFetchQuery;
     private Query mPaidNewsFetchQuery;
 
-    private Set<String> mAvailableTags = new TreeSet<>();
-
-    public interface OnFetchNewsDataListener {
-        void onDataFetchComplete(boolean success, @NonNull List<NewsModel> newsModels);
-    }
-
-    public interface OnArticleTagsFetchListener {
-        void onTagsFetched(boolean success, @NonNull Set<String> tags);
-    }
+    private Set<TagInterestsModel> mAvailableTags = new HashSet<>();
 
     /**
      * Should not be instantiated outside the class
      */
-    private MapleDataModel() { }
+    private MapleDataModel() {
+    }
 
     public static MapleDataModel getInstance() {
         if (sInstance == null) {
@@ -77,6 +69,7 @@ public class MapleDataModel {
 
     /**
      * This method fetch next batch of free news data and merges with the original list.
+     *
      * @param listener callback on data fetch complete.
      */
     public void fetchNextBatchFreeNewsData(@NonNull OnFetchNewsDataListener listener) {
@@ -88,6 +81,7 @@ public class MapleDataModel {
 
     /**
      * This method fetches paid news data and saves in a list.
+     *
      * @param listener callback on data fetch complete.
      */
     public void fetchFirstBatchPaidNewsData(@NonNull OnFetchNewsDataListener listener) {
@@ -102,6 +96,7 @@ public class MapleDataModel {
 
     /**
      * This method fetch next batch of paid news data and merges with the original list.
+     *
      * @param listener callback on data fetch complete.
      */
     public void fetchNextBatchPaidNewsData(@NonNull OnFetchNewsDataListener listener) {
@@ -182,22 +177,26 @@ public class MapleDataModel {
         mFirestore.collection("ArticleTags").orderBy("name").get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        mAvailableTags.add((String) snapshot.get("name"));
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            final TagInterestsModel tagInterests = new TagInterestsModel((String) snapshot.get("id"), (String) snapshot.get("name"));
+                            mAvailableTags.add(tagInterests);
+                        }
                     }
                     listener.onTagsFetched(true, mAvailableTags);
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Failed to get data", e);
-                    listener.onTagsFetched(false, Collections.emptySet());
+                    listener.onTagsFetched(false, mAvailableTags);
                 });
     }
 
-    public Set<String> getAvailableTags() {
+    public Set<TagInterestsModel> getAvailableTags() {
         return mAvailableTags;
     }
 
     /**
      * This method gives list of all free NewsModels.
+     *
      * @return List of NewsModel
      */
     public List<NewsModel> getFreeNewsModels() {
@@ -213,6 +212,7 @@ public class MapleDataModel {
 
     /**
      * This method gives list of all paid NewsModels.
+     *
      * @return List of NewsModel
      */
     public List<NewsModel> getPaidNewsModels() {
@@ -224,5 +224,13 @@ public class MapleDataModel {
         }
 
         return paidModels;
+    }
+
+    public interface OnFetchNewsDataListener {
+        void onDataFetchComplete(boolean success, @NonNull List<NewsModel> newsModels);
+    }
+
+    public interface OnArticleTagsFetchListener {
+        void onTagsFetched(boolean success, @NonNull Set<TagInterestsModel> tags);
     }
 }
