@@ -77,6 +77,8 @@ public class EditorHomeFragment extends BaseFragment {
 
     private RadioButton mFreeRadioButton;
     private RadioButton mPaidRadioButton;
+    private RadioButton mKnowledgeRadioButton;
+    private RadioButton mProjectsRadioButton;
 
     private ArticleContentType mSelectedArticleType = ArticleContentType.FREE;
 
@@ -91,6 +93,14 @@ public class EditorHomeFragment extends BaseFragment {
                     }
                     case R.id.paid_radio_button: {
                         mSelectedArticleType = ArticleContentType.PAID;
+                        break;
+                    }
+                    case R.id.knowledge_radio_button: {
+                        mSelectedArticleType = ArticleContentType.KNOWLEDGE;
+                        break;
+                    }
+                    case R.id.projects_radio_button: {
+                        mSelectedArticleType = ArticleContentType.PROJECTS;
                         break;
                     }
                     default:
@@ -140,6 +150,12 @@ public class EditorHomeFragment extends BaseFragment {
         mPaidRadioButton = view.findViewById(R.id.paid_radio_button);
         mPaidRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
 
+        mKnowledgeRadioButton = view.findViewById(R.id.knowledge_radio_button);
+        mKnowledgeRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mProjectsRadioButton = view.findViewById(R.id.projects_radio_button);
+        mProjectsRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
         mFreeRadioButton.setChecked(true);
     }
 
@@ -167,6 +183,7 @@ public class EditorHomeFragment extends BaseFragment {
                         uploadTask.continueWithTask(task -> {
                             if (!task.isSuccessful()) {
                                 Log.d(TAG, "uploadTask.continueWithTask failed");
+                                hideLoadingFragment();
                             }
                             return imageRef.getDownloadUrl();
                         }).addOnCompleteListener(task -> {
@@ -219,12 +236,12 @@ public class EditorHomeFragment extends BaseFragment {
         final Map<String, String> data = new HashMap<>();
         data.put(ID_KEY, id);
         data.put(DEBUG_KEY, "true");
-        data.put(TITLE_KEY, getSpannedHtmlText(mTitleEditText.getText()));
-        data.put(DESCRIPTION_KEY, getSpannedHtmlText(mDescriptionEditText.getText()));
-        data.put(ARTICLE_TYPE_KEY, String.valueOf(mSelectedArticleType.getValue()));
+        data.put(TITLE_KEY, getSpannedHtmlText(mTitleEditText.getText().toString().trim()));
+        data.put(DESCRIPTION_KEY, getSpannedHtmlText(mDescriptionEditText.getText().toString().trim()));
+        data.put(ARTICLE_TYPE_KEY, String.valueOf(mSelectedArticleType.getValue()).trim());
         data.put(TIME_IN_MILLIS_KEY, timeInMillis);
         data.put(PENDING_FOR_APPROVAL_KEY, "true");
-        data.put(ARTICLE_AREA_KEY, getSpannedHtmlText(mInterestAreaEditText.getText()));
+        data.put(ARTICLE_AREA_KEY, getSpannedHtmlText(mInterestAreaEditText.getText().toString().trim()));
         data.put(IMAGE_URI_KEY, mImageDownloadUri != null ? mImageDownloadUri.toString() : "");
 
         mFirestore.collection(ARTICLES_KEY).document(id).set(data)

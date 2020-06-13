@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 enum class ArticleContentType(private val value: Int) : Parcelable {
-    UNKNOWN(-1), FREE(0), PAID(1);
+    UNKNOWN(-1), FREE(0), PAID(1), KNOWLEDGE(2), PROJECTS(3);
 
     companion object {
         @JvmStatic

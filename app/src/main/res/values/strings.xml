@@ -26,6 +26,8 @@
     <string name="user_image">User Image</string>
     <string name="tab_text_1">Free News</string>
     <string name="tab_text_2">Premium News</string>
+    <string name="tab_text_3">Knowledge series</string>
+    <string name="tab_text_4">Project reports</string>
     <string name="dummy_text">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.</string>
     <string name="news_image">News Image</string>
     <string name="click_to_view">See full article</string>
@@ -51,6 +53,8 @@
     <string name="article_type_text">Article type</string>
     <string name="free_text">Free</string>
     <string name="paid_text">Paid</string>
+    <string name="knowledge_series_text">Knowledge series</string>
+    <string name="project_reports_text">Project reports</string>
     <string name="article_interest_area_text">Interest</string>
     <string name="sample_date">Date : 07–06–2020</string>
     <string name="see_more_text">See more</string>
@@ -76,4 +80,5 @@
     <string name="choose_your_interests">Choose Your Interests</string>
     <string name="done">Done</string>
     <string name="select_interest">Please select Interests</string>
+    <string name="no_items_available">No items available</string>
 </resources>

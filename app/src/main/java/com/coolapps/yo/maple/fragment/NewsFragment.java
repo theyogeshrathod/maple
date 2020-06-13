@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,25 +25,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Fragment for Free news
+ * Fragment for Free, Paid, Knowledge, Projects news
  */
 public class NewsFragment extends BaseFragment {
     private static final String ARTICLE_TYPE_ARGS = "article_type_arg";
+    private static final String ARTICLE_TAG_ARGS = "article_tag_arg";
     private static final String TAG = "FreeNewsFragment";
 
     private SwipeRefreshLayout mRoot;
     private RecyclerView mNewsRecyclerView;
+    private TextView mNoItemsAvailable;
     private List<NewsModel> mNewsList = new ArrayList<>();
     private NewsAdapter mNewsAdapter;
     private LinearLayoutManager mLayoutManager;
     private boolean mLoading = false;
+    private ArticleContentType mArticleType;
+    private String mArticleTag;
 
-    public static NewsFragment newInstance(@NonNull ArticleContentType type) {
+    public static NewsFragment newInstance(@NonNull ArticleContentType type, @Nullable String articleTag) {
         final Bundle args = new Bundle();
         args.putParcelable(ARTICLE_TYPE_ARGS, type);
+        args.putString(ARTICLE_TAG_ARGS, articleTag);
         final NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final Bundle args = getArguments();
+        if (args != null) {
+            mArticleType = args.getParcelable(ARTICLE_TYPE_ARGS);
+            mArticleTag = args.getString(ARTICLE_TAG_ARGS);
+        }
     }
 
     @Override
@@ -56,6 +72,7 @@ public class NewsFragment extends BaseFragment {
             });
         });
 
+        mNoItemsAvailable = view.findViewById(R.id.no_items_text_view);
         mNewsRecyclerView = view.findViewById(R.id.newsRecyclerView);
         mNewsRecyclerView.setHasFixedSize(true);
 
@@ -75,15 +92,15 @@ public class NewsFragment extends BaseFragment {
 
             final Bundle args = getArguments();
             if (args != null) {
-                if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.PAID) {
+                if (mArticleType == ArticleContentType.PAID) {
                     // TODO: Check if has subscription before showing alert
-                    if (isSeeMore) {
+                    if (false) {
                         MapleAlerts.createNoSubscriptionAlert(requireContext(), null, null, null).show();
                     }
-                } else if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.FREE) {
-                    if (!isSeeMore) {
-                        mNewsRecyclerView.smoothScrollToPosition(position);
-                    }
+                }
+
+                if (!isSeeMore) {
+                    mNewsRecyclerView.smoothScrollToPosition(position);
                 }
             }
         });
@@ -113,12 +130,24 @@ public class NewsFragment extends BaseFragment {
     private void refreshNewsList() {
         final Bundle args = getArguments();
         if (args != null) {
-            if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.FREE) {
-                mNewsList = MapleDataModel.getInstance().getFreeNewsModels();
-            } else if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.PAID) {
-                mNewsList = MapleDataModel.getInstance().getPaidNewsModels();
+            if (mArticleType == ArticleContentType.FREE) {
+                mNewsList = MapleDataModel.getInstance().getFreeNewsModels(mArticleTag);
+            } else if (mArticleType == ArticleContentType.PAID) {
+                mNewsList = MapleDataModel.getInstance().getPaidNewsModels(mArticleTag);
+            } else if (mArticleType == ArticleContentType.KNOWLEDGE) {
+                mNewsList = MapleDataModel.getInstance().getKnowledgeNewsModels(mArticleTag);
+            } else if (mArticleType == ArticleContentType.PROJECTS) {
+                mNewsList = MapleDataModel.getInstance().getProjectsNewsModels(mArticleTag);
             }
+
             mNewsAdapter.setData(mNewsList);
+            if (mNewsList.size() == 0) {
+                mNoItemsAvailable.setVisibility(View.VISIBLE);
+                mNewsRecyclerView.setVisibility(View.GONE);
+            } else {
+                mNoItemsAvailable.setVisibility(View.GONE);
+                mNewsRecyclerView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -132,16 +161,26 @@ public class NewsFragment extends BaseFragment {
 
         final Bundle args = getArguments();
         if (args != null) {
-            if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.FREE) {
+            if (mArticleType == ArticleContentType.FREE) {
                 MapleDataModel.getInstance().fetchNextBatchFreeNewsData((success, newsModels) -> {
                     refreshNewsList(newsModels);
                     mLoading = false;
-                });
-            } else if (args.getParcelable(ARTICLE_TYPE_ARGS) == ArticleContentType.PAID) {
+                }, mArticleTag);
+            } else if (mArticleType == ArticleContentType.PAID) {
                 MapleDataModel.getInstance().fetchNextBatchPaidNewsData((success, newsModels) -> {
                     refreshNewsList(newsModels);
                     mLoading = false;
-                });
+                }, mArticleTag);
+            } else if (mArticleType == ArticleContentType.KNOWLEDGE) {
+                MapleDataModel.getInstance().fetchNextBatchKnowledgeNewsData((success, newsModels) -> {
+                    refreshNewsList(newsModels);
+                    mLoading = false;
+                }, mArticleTag);
+            } else if (mArticleType == ArticleContentType.PROJECTS) {
+                MapleDataModel.getInstance().fetchNextBatchProjectsNewsData((success, newsModels) -> {
+                    refreshNewsList(newsModels);
+                    mLoading = false;
+                }, mArticleTag);
             }
         }
     }

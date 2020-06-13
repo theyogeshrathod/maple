@@ -69,10 +69,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             final boolean isExpanded = mNewsModelList.get(position).isExpanded();
 
             // TODO: Check subscription for Premium
-            if (mNewsModelList.get(position).getNewsModel().getNewsType() == ArticleContentType.FREE) {
-                mNewsModelList.get(position).setExpanded(!isExpanded);
-                notifyItemChanged(position);
-            }
+            mNewsModelList.get(position).setExpanded(!isExpanded);
+            notifyItemChanged(position);
 
             if (mNewsItemSeeMoreClickListener != null) {
                 mNewsItemSeeMoreClickListener.onNewsItemClick(v, holder.getAdapterPosition(), !isExpanded);
@@ -107,11 +105,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         void bind(@NonNull NewsModelItem newsModelItem) {
             final NewsModel newsModel = newsModelItem.getNewsModel();
-            mNewsTitle.setText(Html.fromHtml(newsModel.getTitle()));
+            mNewsTitle.setText(Html.fromHtml(newsModel.getHtmlTitle()));
             final String date = GetDateFromTimestamp.getDate(Long.parseLong(newsModel.getTimeInMillis()));
             mNewsDate.setText(date);
-            mShortNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
-            mFullNewsDescription.setText(Html.fromHtml(newsModel.getDescription()));
+            mShortNewsDescription.setText(Html.fromHtml(newsModel.getHtmlDescription()));
+            mFullNewsDescription.setText(Html.fromHtml(newsModel.getHtmlDescription()));
 
             if (newsModel.getNewsType() == ArticleContentType.FREE) {
                 mCardView.setBackground(itemView.getResources().getDrawable(R.drawable.background_free_news));
