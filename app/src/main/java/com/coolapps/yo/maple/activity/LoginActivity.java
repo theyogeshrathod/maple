@@ -102,8 +102,10 @@ public class LoginActivity extends BaseActivity {
     private void launchNewsActivity() {
         final FirebaseUser user = LoginManager.getLoggedInUser();
         if (user != null) {
-            if ("entrao2consultancy@gmail.com".equalsIgnoreCase(user.getEmail()) || "amibellvc@gmail.com".equalsIgnoreCase(user.getEmail())
-            || "yogesh.rathod04@gmail.com".equalsIgnoreCase(user.getEmail())) {
+            if ("entrao2consultancy@gmail.com".equalsIgnoreCase(user.getEmail())
+                    || "amibellvc@gmail.com".equalsIgnoreCase(user.getEmail())
+                    || "amogh.kulkarni29@gmail.com".equalsIgnoreCase(user.getEmail())
+                    || "yogesh.rathod04@gmail.com1".equalsIgnoreCase(user.getEmail())) {
                 launchHomeActivity();
                 return;
             }

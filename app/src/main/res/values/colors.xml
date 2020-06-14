@@ -26,5 +26,5 @@
     <color name="lightBlue">#DDEDFA</color>
     <color name="choose_btn_color">#FF9800</color>
     <color name="article_tag_background_color">#57C4F6</color>
-    <color name="selected_article_tag_background_color">#D8EFFA</color>
+    <color name="selected_article_tag_background_color">#F1F9FD</color>
 </resources>
