@@ -4,7 +4,7 @@
     <gradient
         android:angle="135"
         android:endColor="@color/white"
-        android:startColor="@color/selected_article_tag_background_color"
+        android:startColor="@color/freeCardBackground"
         android:type="linear" />
     <corners android:radius="@dimen/card_corner_radius"/>
 </shape>

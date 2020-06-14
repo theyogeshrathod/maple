@@ -18,7 +18,7 @@
     <color name="pink">#FF6584</color>
     <color name="darkBlue">#300E5F</color>
     <color name="premiumCardBackground">#FFF6B8</color>
-    <color name="freeCardBackground">#E5F4FB</color>
+    <color name="freeCardBackground">#F1F9FD</color>
     <color name="selectedTabTextColor">#FFFFFF</color>
     <color name="selectedTabIndicator">#6E49A1</color>
     <color name="lightYellow">#FDFBE8</color>
@@ -26,5 +26,5 @@
     <color name="lightBlue">#DDEDFA</color>
     <color name="choose_btn_color">#FF9800</color>
     <color name="article_tag_background_color">#57C4F6</color>
-    <color name="selected_article_tag_background_color">#F1F9FD</color>
+    <color name="selected_article_tag_background_color">#D8EFFA</color>
 </resources>
