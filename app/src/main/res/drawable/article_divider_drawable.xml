@@ -4,5 +4,5 @@
     <size
         android:width="@dimen/article_divider_width"
         android:height="@dimen/article_divider_height" />
-    <solid android:color="@color/light_gray" />
+    <solid android:color="@color/article_tag_background_color" />
 </shape>

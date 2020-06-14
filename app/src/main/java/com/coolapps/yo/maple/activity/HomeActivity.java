@@ -24,7 +24,7 @@ public class HomeActivity extends BaseActivity {
             final Fragment fragment;
             final int toolbarTextRes;
             // Hard-coded Admin email for now.
-            if ("yogesh.rathod04@gmail.com".equalsIgnoreCase(currentUser.getEmail())) {
+            if ("yogesh.rathod04@gmail.com1".equalsIgnoreCase(currentUser.getEmail())) {
                 fragment = AdminHomeFragment.newInstance();
                 toolbarTextRes = R.string.admin_text;
             } else {

@@ -23,13 +23,13 @@
     <dimen name="loading_bullet_size">20dp</dimen>
     <dimen name="loading_stroke_width">2dp</dimen>
     <dimen name="card_corner_radius">10dp</dimen>
-    <dimen name="article_divider_width">5dp</dimen>
+    <dimen name="article_divider_width">4dp</dimen>
     <dimen name="article_divider_height">10dp</dimen>
     <dimen name="article_item_margin">5dp</dimen>
-    <dimen name="article_item_min_height">20dp</dimen>
+    <dimen name="article_item_min_height">30dp</dimen>
     <dimen name="article_item_text_size">20sp</dimen>
-    <dimen name="article_list_view_padding_top">5dp</dimen>
-    <dimen name="article_list_view_padding_bottom">5dp</dimen>
+    <dimen name="article_list_view_padding_top">3dp</dimen>
+    <dimen name="article_list_view_padding_bottom">3dp</dimen>
     <dimen name="article_item_padding_start">10dp</dimen>
     <dimen name="article_item_padding_end">10dp</dimen>
     <dimen name="profile_card_dimension">100dp</dimen>

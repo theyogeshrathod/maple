@@ -44,19 +44,21 @@ public class UserHomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final NewsPagerAdapter newsPagerAdapter = new NewsPagerAdapter(requireActivity(), getChildFragmentManager());
         final ViewPager viewPager = view.findViewById(R.id.view_pager);
-        viewPager.setAdapter(newsPagerAdapter);
         final TabLayout tabs = view.findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-
         final RecyclerView mArticlesRecyclerView = view.findViewById(R.id.articlesRecyclerView);
 
-        final ArticlesAdapter articlesAdapter = new ArticlesAdapter();
+        final NewsPagerAdapter newsPagerAdapter = new NewsPagerAdapter(requireActivity(), getChildFragmentManager(), null);
+        viewPager.setAdapter(newsPagerAdapter);
+        tabs.setupWithViewPager(viewPager);
+
+        final ArticlesAdapter articlesAdapter = new ArticlesAdapter(requireContext(), tagId -> {
+            newsPagerAdapter.setArticleTagId("0".equalsIgnoreCase(tagId) ? null : tagId);
+        });
+
         final List<TagInterestsModel> tagsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
         articlesAdapter.setTagsList(tagsList);
         mArticlesRecyclerView.setAdapter(articlesAdapter);
-
         mArticlesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         final DividerItemDecoration decoration = new DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL);
         decoration.setDrawable(requireContext().getResources().getDrawable(R.drawable.article_divider_drawable));

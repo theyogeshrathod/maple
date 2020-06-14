@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/light_gray"
+        android:background="@color/article_tag_background_color"
         android:id="@+id/articlesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/tabs"
+        android:layout_marginTop="@dimen/margin5"
         android:layout_below="@+id/articlesRecyclerView"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

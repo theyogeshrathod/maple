@@ -34,6 +34,8 @@ public class LoginActivity extends BaseActivity {
 
     private boolean mFirstBatchFreeNewsFetched = false;
     private boolean mFirstBatchPaidNewsFetched = false;
+    private boolean mFirstBatchKnowledgeNewsFetched = false;
+    private boolean mFirstBatchProjectsNewsFetched = false;
     private boolean mAllArticleTagsFetched = false;
 
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
@@ -51,7 +53,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void checkLaunchHomeScreen() {
-        if (mFirstBatchFreeNewsFetched && mFirstBatchPaidNewsFetched && mAllArticleTagsFetched) {
+        if (mFirstBatchFreeNewsFetched && mFirstBatchPaidNewsFetched && mFirstBatchKnowledgeNewsFetched
+                && mFirstBatchProjectsNewsFetched && mAllArticleTagsFetched) {
             launchNewsActivity();
         }
     }
@@ -97,6 +100,15 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void launchNewsActivity() {
+        final FirebaseUser user = LoginManager.getLoggedInUser();
+        if (user != null) {
+            if ("entrao2consultancy@gmail.com".equalsIgnoreCase(user.getEmail()) || "amibellvc@gmail.com".equalsIgnoreCase(user.getEmail())
+            || "yogesh.rathod04@gmail.com".equalsIgnoreCase(user.getEmail())) {
+                launchHomeActivity();
+                return;
+            }
+        }
+
         final Intent intent = new Intent(this, NewsActivity.class);
         startActivity(intent);
         finish();
@@ -110,17 +122,25 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void fetchAllData() {
-        fetchFirstBatchOfFreeAndPaidData();
+        fetchFirstBatchOfFreePaidKnowledgeProjectsData();
         fetchAllArticlesData();
     }
 
-    private void fetchFirstBatchOfFreeAndPaidData() {
+    private void fetchFirstBatchOfFreePaidKnowledgeProjectsData() {
         MapleDataModel.getInstance().fetchFirstBatchFreeNewsData((success, newsModels) -> {
             mFirstBatchFreeNewsFetched = true;
             checkLaunchHomeScreen();
         });
         MapleDataModel.getInstance().fetchFirstBatchPaidNewsData((success, newsModels) -> {
             mFirstBatchPaidNewsFetched = true;
+            checkLaunchHomeScreen();
+        });
+        MapleDataModel.getInstance().fetchFirstBatchKnowledgeNewsData((success, newsModels) -> {
+            mFirstBatchKnowledgeNewsFetched = true;
+            checkLaunchHomeScreen();
+        });
+        MapleDataModel.getInstance().fetchFirstBatchProjectsNewsData((success, newsModels) -> {
+            mFirstBatchProjectsNewsFetched = true;
             checkLaunchHomeScreen();
         });
     }

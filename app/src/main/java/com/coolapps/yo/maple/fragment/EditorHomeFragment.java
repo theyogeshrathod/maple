@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.coolapps.yo.maple.ArticleContentType;
+import com.coolapps.yo.maple.ArticleTags;
 import com.coolapps.yo.maple.MapleAlerts;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.widget.MapleButton;
@@ -71,14 +72,28 @@ public class EditorHomeFragment extends BaseFragment {
     private MapleButton mSubmitButton;
     private MapleEditText mTitleEditText;
     private MapleEditText mDescriptionEditText;
-    private MapleEditText mInterestAreaEditText;
     private TextView mImageUploadedTextView;
     private Uri mImageDownloadUri;
 
     private RadioButton mFreeRadioButton;
     private RadioButton mPaidRadioButton;
+    private RadioButton mKnowledgeRadioButton;
+    private RadioButton mProjectsRadioButton;
+
+    private RadioButton mBusinessRadioButton;
+    private RadioButton mManufacturingRadioButton;
+    private RadioButton mServiceRadioButton;
+    private RadioButton mInternationalRadioButton;
+    private RadioButton mTechnologyRadioButton;
+    private RadioButton mStartUpRadioButton;
+    private RadioButton mStockMarketRadioButton;
+    private RadioButton mInnovationRadioButton;
+    private RadioButton mSuccessStoryRadioButton;
+    private RadioButton mEconomicsRadioButton;
+    private RadioButton mImportExportRadioButton;
 
     private ArticleContentType mSelectedArticleType = ArticleContentType.FREE;
+    private ArticleTags mSelectedArticleTag = ArticleTags.BUSINESS;
 
     private View.OnClickListener mOnRadioButtonClickedListener = v -> {
         if (v instanceof RadioButton) {
@@ -93,11 +108,64 @@ public class EditorHomeFragment extends BaseFragment {
                         mSelectedArticleType = ArticleContentType.PAID;
                         break;
                     }
+                    case R.id.knowledge_radio_button: {
+                        mSelectedArticleType = ArticleContentType.KNOWLEDGE;
+                        break;
+                    }
+                    case R.id.projects_radio_button: {
+                        mSelectedArticleType = ArticleContentType.PROJECTS;
+                        break;
+                    }
+                    case R.id.business_radio_button: {
+                        mSelectedArticleTag = ArticleTags.BUSINESS;
+                        break;
+                    }
+                    case R.id.manufacturing_radio_button: {
+                        mSelectedArticleTag = ArticleTags.MANUFACTURING;
+                        break;
+                    }
+                    case R.id.service_radio_button: {
+                        mSelectedArticleTag = ArticleTags.SERVICE;
+                        break;
+                    }
+                    case R.id.international_radio_button: {
+                        mSelectedArticleTag = ArticleTags.INTERNATIONAL;
+                        break;
+                    }
+                    case R.id.technology_radio_button: {
+                        mSelectedArticleTag = ArticleTags.TECHNOLOGY;
+                        break;
+                    }
+                    case R.id.start_up_radio_button: {
+                        mSelectedArticleTag = ArticleTags.START_UP;
+                        break;
+                    }
+                    case R.id.stock_market_radio_button: {
+                        mSelectedArticleTag = ArticleTags.STOCK_MARKET;
+                        break;
+                    }
+                    case R.id.innovation_radio_button: {
+                        mSelectedArticleTag = ArticleTags.INNOVATION;
+                        break;
+                    }
+                    case R.id.success_story_radio_button: {
+                        mSelectedArticleTag = ArticleTags.SUCCESS_STORY;
+                        break;
+                    }
+                    case R.id.economics_radio_button: {
+                        mSelectedArticleTag = ArticleTags.ECONOMICS;
+                        break;
+                    }
+                    case R.id.import_export_radio_button: {
+                        mSelectedArticleTag = ArticleTags.IMPORT_EXPORT;
+                        break;
+                    }
                     default:
                         break;
                 }
             }
         }
+        Log.d(TAG, "Selected mSelectedArticleType: " + mSelectedArticleType + ", selected mSelectedArticleTag: " + mSelectedArticleTag);
     };
 
     public static EditorHomeFragment newInstance() {
@@ -119,7 +187,6 @@ public class EditorHomeFragment extends BaseFragment {
 
         mTitleEditText = view.findViewById(R.id.title_edit_text);
         mDescriptionEditText = view.findViewById(R.id.description_edit_text);
-        mInterestAreaEditText = view.findViewById(R.id.article_interest_area_edit_text);
         mImageUploadedTextView = view.findViewById(R.id.image_uploaded_text);
 
         mUploadImageButton = view.findViewById(R.id.image_upload_button);
@@ -140,7 +207,47 @@ public class EditorHomeFragment extends BaseFragment {
         mPaidRadioButton = view.findViewById(R.id.paid_radio_button);
         mPaidRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
 
+        mKnowledgeRadioButton = view.findViewById(R.id.knowledge_radio_button);
+        mKnowledgeRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mProjectsRadioButton = view.findViewById(R.id.projects_radio_button);
+        mProjectsRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mBusinessRadioButton = view.findViewById(R.id.business_radio_button);
+        mBusinessRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mManufacturingRadioButton = view.findViewById(R.id.manufacturing_radio_button);
+        mManufacturingRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mServiceRadioButton = view.findViewById(R.id.service_radio_button);
+        mServiceRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mInternationalRadioButton = view.findViewById(R.id.international_radio_button);
+        mInternationalRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mTechnologyRadioButton = view.findViewById(R.id.technology_radio_button);
+        mTechnologyRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mStartUpRadioButton = view.findViewById(R.id.start_up_radio_button);
+        mStartUpRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mStockMarketRadioButton = view.findViewById(R.id.stock_market_radio_button);
+        mStockMarketRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mInnovationRadioButton = view.findViewById(R.id.innovation_radio_button);
+        mInnovationRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mSuccessStoryRadioButton = view.findViewById(R.id.success_story_radio_button);
+        mSuccessStoryRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mEconomicsRadioButton = view.findViewById(R.id.economics_radio_button);
+        mEconomicsRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
+        mImportExportRadioButton = view.findViewById(R.id.import_export_radio_button);
+        mImportExportRadioButton.setOnClickListener(mOnRadioButtonClickedListener);
+
         mFreeRadioButton.setChecked(true);
+        mBusinessRadioButton.setChecked(true);
     }
 
     @Override
@@ -167,6 +274,7 @@ public class EditorHomeFragment extends BaseFragment {
                         uploadTask.continueWithTask(task -> {
                             if (!task.isSuccessful()) {
                                 Log.d(TAG, "uploadTask.continueWithTask failed");
+                                hideLoadingFragment();
                             }
                             return imageRef.getDownloadUrl();
                         }).addOnCompleteListener(task -> {
@@ -219,12 +327,12 @@ public class EditorHomeFragment extends BaseFragment {
         final Map<String, String> data = new HashMap<>();
         data.put(ID_KEY, id);
         data.put(DEBUG_KEY, "true");
-        data.put(TITLE_KEY, getSpannedHtmlText(mTitleEditText.getText()));
-        data.put(DESCRIPTION_KEY, getSpannedHtmlText(mDescriptionEditText.getText()));
-        data.put(ARTICLE_TYPE_KEY, String.valueOf(mSelectedArticleType.getValue()));
+        data.put(TITLE_KEY, getSpannedHtmlText(mTitleEditText.getText().toString().trim()));
+        data.put(DESCRIPTION_KEY, getSpannedHtmlText(mDescriptionEditText.getText().toString().trim()));
+        data.put(ARTICLE_TYPE_KEY, String.valueOf(mSelectedArticleType.getValue()).trim());
         data.put(TIME_IN_MILLIS_KEY, timeInMillis);
         data.put(PENDING_FOR_APPROVAL_KEY, "true");
-        data.put(ARTICLE_AREA_KEY, getSpannedHtmlText(mInterestAreaEditText.getText()));
+        data.put(ARTICLE_AREA_KEY, mSelectedArticleTag.getId());
         data.put(IMAGE_URI_KEY, mImageDownloadUri != null ? mImageDownloadUri.toString() : "");
 
         mFirestore.collection(ARTICLES_KEY).document(id).set(data)
@@ -256,8 +364,8 @@ public class EditorHomeFragment extends BaseFragment {
         mDescriptionEditText.setText(null);
         mUploadImageButton.setVisibility(View.VISIBLE);
         mImageUploadedTextView.setVisibility(View.GONE);
-        mInterestAreaEditText.setText(null);
         mFreeRadioButton.setChecked(true);
+        mBusinessRadioButton.setChecked(true);
     }
 
     private void showLoadingFragment() {
