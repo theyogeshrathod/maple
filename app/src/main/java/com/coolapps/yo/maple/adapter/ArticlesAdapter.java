@@ -42,10 +42,10 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         holder.bind(mTagsList.get(position),
-                mSelectedIndex == position ? mContext.getResources().getColor(R.color.lightYellow)
+                mSelectedIndex == position ? mContext.getResources().getColor(R.color.selected_article_tag_background_color)
                         : mContext.getResources().getColor(R.color.white));
         holder.itemView.setOnClickListener(v -> {
-            mOnTagsSelectedListener.onTagSelected(mTagsList.get(holder.getAdapterPosition()).getTagName());
+            mOnTagsSelectedListener.onTagSelected(mTagsList.get(holder.getAdapterPosition()).getId());
             mSelectedIndex = holder.getAdapterPosition();
             notifyDataSetChanged();
         });

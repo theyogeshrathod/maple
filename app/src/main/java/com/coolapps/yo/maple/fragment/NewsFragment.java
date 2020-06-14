@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class NewsFragment extends BaseFragment {
     private static final String ARTICLE_TYPE_ARGS = "article_type_arg";
-    private static final String ARTICLE_TAG_ARGS = "article_tag_arg";
+    private static final String ARTICLE_TAG_ID_ARGS = "article_tag_id_arg";
     private static final String TAG = "FreeNewsFragment";
 
     private SwipeRefreshLayout mRoot;
@@ -40,12 +40,12 @@ public class NewsFragment extends BaseFragment {
     private LinearLayoutManager mLayoutManager;
     private boolean mLoading = false;
     private ArticleContentType mArticleType;
-    private String mArticleTag;
+    private String mArticleTagId;
 
-    public static NewsFragment newInstance(@NonNull ArticleContentType type, @Nullable String articleTag) {
+    public static NewsFragment newInstance(@NonNull ArticleContentType type, @Nullable String articleTagId) {
         final Bundle args = new Bundle();
         args.putParcelable(ARTICLE_TYPE_ARGS, type);
-        args.putString(ARTICLE_TAG_ARGS, articleTag);
+        args.putString(ARTICLE_TAG_ID_ARGS, articleTagId);
         final NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -57,7 +57,7 @@ public class NewsFragment extends BaseFragment {
         final Bundle args = getArguments();
         if (args != null) {
             mArticleType = args.getParcelable(ARTICLE_TYPE_ARGS);
-            mArticleTag = args.getString(ARTICLE_TAG_ARGS);
+            mArticleTagId = args.getString(ARTICLE_TAG_ID_ARGS);
         }
     }
 
@@ -131,13 +131,13 @@ public class NewsFragment extends BaseFragment {
         final Bundle args = getArguments();
         if (args != null) {
             if (mArticleType == ArticleContentType.FREE) {
-                mNewsList = MapleDataModel.getInstance().getFreeNewsModels(mArticleTag);
+                mNewsList = MapleDataModel.getInstance().getFreeNewsModels(mArticleTagId);
             } else if (mArticleType == ArticleContentType.PAID) {
-                mNewsList = MapleDataModel.getInstance().getPaidNewsModels(mArticleTag);
+                mNewsList = MapleDataModel.getInstance().getPaidNewsModels(mArticleTagId);
             } else if (mArticleType == ArticleContentType.KNOWLEDGE) {
-                mNewsList = MapleDataModel.getInstance().getKnowledgeNewsModels(mArticleTag);
+                mNewsList = MapleDataModel.getInstance().getKnowledgeNewsModels(mArticleTagId);
             } else if (mArticleType == ArticleContentType.PROJECTS) {
-                mNewsList = MapleDataModel.getInstance().getProjectsNewsModels(mArticleTag);
+                mNewsList = MapleDataModel.getInstance().getProjectsNewsModels(mArticleTagId);
             }
 
             mNewsAdapter.setData(mNewsList);
@@ -165,22 +165,22 @@ public class NewsFragment extends BaseFragment {
                 MapleDataModel.getInstance().fetchNextBatchFreeNewsData((success, newsModels) -> {
                     refreshNewsList(newsModels);
                     mLoading = false;
-                }, mArticleTag);
+                }, mArticleTagId);
             } else if (mArticleType == ArticleContentType.PAID) {
                 MapleDataModel.getInstance().fetchNextBatchPaidNewsData((success, newsModels) -> {
                     refreshNewsList(newsModels);
                     mLoading = false;
-                }, mArticleTag);
+                }, mArticleTagId);
             } else if (mArticleType == ArticleContentType.KNOWLEDGE) {
                 MapleDataModel.getInstance().fetchNextBatchKnowledgeNewsData((success, newsModels) -> {
                     refreshNewsList(newsModels);
                     mLoading = false;
-                }, mArticleTag);
+                }, mArticleTagId);
             } else if (mArticleType == ArticleContentType.PROJECTS) {
                 MapleDataModel.getInstance().fetchNextBatchProjectsNewsData((success, newsModels) -> {
                     refreshNewsList(newsModels);
                     mLoading = false;
-                }, mArticleTag);
+                }, mArticleTagId);
             }
         }
     }

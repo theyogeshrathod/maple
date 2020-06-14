@@ -17,5 +17,5 @@ data class NewsModel (
     val isDebug: String,
     val timeInMillis: String,
     val isPendingForApproval: String,
-    val interestAreas: String?
+    val interestAreasTagId: String?
 ) : Parcelable

@@ -100,6 +100,15 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void launchNewsActivity() {
+        final FirebaseUser user = LoginManager.getLoggedInUser();
+        if (user != null) {
+            if ("entrao2consultancy@gmail.com".equalsIgnoreCase(user.getEmail()) || "amibellvc@gmail.com".equalsIgnoreCase(user.getEmail())
+            || "yogesh.rathod04@gmail.com".equalsIgnoreCase(user.getEmail())) {
+                launchHomeActivity();
+                return;
+            }
+        }
+
         final Intent intent = new Intent(this, NewsActivity.class);
         startActivity(intent);
         finish();

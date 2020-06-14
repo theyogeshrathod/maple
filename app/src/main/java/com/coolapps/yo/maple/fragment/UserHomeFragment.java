@@ -52,8 +52,8 @@ public class UserHomeFragment extends BaseFragment {
         viewPager.setAdapter(newsPagerAdapter);
         tabs.setupWithViewPager(viewPager);
 
-        final ArticlesAdapter articlesAdapter = new ArticlesAdapter(requireContext(), tag -> {
-            newsPagerAdapter.setArticleTag("all".equalsIgnoreCase(tag) ? null : tag);
+        final ArticlesAdapter articlesAdapter = new ArticlesAdapter(requireContext(), tagId -> {
+            newsPagerAdapter.setArticleTagId("0".equalsIgnoreCase(tagId) ? null : tagId);
         });
 
         final List<TagInterestsModel> tagsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());

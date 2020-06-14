@@ -23,12 +23,12 @@ public class NewsPagerAdapter extends FragmentStatePagerAdapter {
             new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4};
 
     private Context mContext;
-    private String mArticleTag;
+    private String mArticleTagId;
 
-    public NewsPagerAdapter(Context context, @NonNull FragmentManager fm, @Nullable String articleTag) {
+    public NewsPagerAdapter(Context context, @NonNull FragmentManager fm, @Nullable String articleTagId) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
-        mArticleTag = articleTag;
+        mArticleTagId = articleTagId;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class NewsPagerAdapter extends FragmentStatePagerAdapter {
         return POSITION_NONE;
     }
 
-    public void setArticleTag(@Nullable String tag) {
-        mArticleTag = tag;
+    public void setArticleTagId(@Nullable String tagId) {
+        mArticleTagId = tagId;
         notifyDataSetChanged();
     }
 
@@ -45,15 +45,15 @@ public class NewsPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return NewsFragment.newInstance(ArticleContentType.FREE, mArticleTag);
+            return NewsFragment.newInstance(ArticleContentType.FREE, mArticleTagId);
         } else if (position == 1) {
-            return NewsFragment.newInstance(ArticleContentType.PAID, mArticleTag);
+            return NewsFragment.newInstance(ArticleContentType.PAID, mArticleTagId);
         } else if (position == 2) {
-            return NewsFragment.newInstance(ArticleContentType.KNOWLEDGE, mArticleTag);
+            return NewsFragment.newInstance(ArticleContentType.KNOWLEDGE, mArticleTagId);
         } else if (position == 3) {
-            return NewsFragment.newInstance(ArticleContentType.PROJECTS, mArticleTag);
+            return NewsFragment.newInstance(ArticleContentType.PROJECTS, mArticleTagId);
         }
-        return NewsFragment.newInstance(ArticleContentType.FREE, mArticleTag);
+        return NewsFragment.newInstance(ArticleContentType.FREE, mArticleTagId);
     }
 
     @Nullable

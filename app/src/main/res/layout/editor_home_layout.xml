@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     android:layout_margin="@dimen/standard_margin_between_views">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -34,7 +36,6 @@
 
         <LinearLayout
             android:layout_marginTop="@dimen/standard_margin_between_views"
-            android:layout_below="@+id/title_container"
             android:id="@+id/description_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -58,35 +59,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="@dimen/standard_margin_between_views"
-            android:layout_below="@+id/description_container"
-            android:id="@+id/interest_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:text="@string/article_interest_area_text"
-                android:layout_weight="1"
-                style="@style/plain_text_style"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-
-            <com.coolapps.yo.maple.widget.MapleEditText
-                android:layout_weight="3"
-                android:id="@+id/article_interest_area_edit_text"
-                android:layout_width="0dp"
-                style="@style/plain_text_style"
-                android:layout_height="wrap_content"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                tools:ignore="LabelFor" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/article_type_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/interest_container"
             android:layout_marginTop="@dimen/standard_margin_between_views">
 
             <TextView
@@ -130,7 +105,96 @@
 
         <LinearLayout
             android:layout_marginTop="@dimen/standard_margin_between_views"
-            android:layout_below="@+id/article_type_container"
+            android:id="@+id/interest_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/article_interest_area_text"
+                android:layout_weight="1"
+                style="@style/plain_text_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/business_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/business_text" />
+
+                <RadioButton
+                    android:id="@+id/manufacturing_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manufacturing_text" />
+
+                <RadioButton
+                    android:id="@+id/service_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_text" />
+
+                <RadioButton
+                    android:id="@+id/international_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/international_text" />
+
+                <RadioButton
+                    android:id="@+id/technology_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/technology_text" />
+
+                <RadioButton
+                    android:id="@+id/start_up_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_up_text" />
+
+                <RadioButton
+                    android:id="@+id/stock_market_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stock_market_text" />
+
+                <RadioButton
+                    android:id="@+id/innovation_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/innovation_text" />
+
+                <RadioButton
+                    android:id="@+id/success_story_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/success_story_text" />
+
+                <RadioButton
+                    android:id="@+id/economics_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/economics_text" />
+
+                <RadioButton
+                    android:id="@+id/import_export_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_export_text" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/standard_margin_between_views"
             android:id="@+id/image_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -163,9 +227,8 @@
             android:layout_marginTop="@dimen/margin20"
             android:layout_width="match_parent"
             android:layout_height="@dimen/maple_button_height"
-            android:layout_below="@+id/image_container"
             android:text="@string/submit_text" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

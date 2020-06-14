@@ -91,10 +91,10 @@ public class MapleDataModel {
      *
      * @param listener callback on data fetch complete.
      */
-    public void fetchNextBatchFreeNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    public void fetchNextBatchFreeNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         if (mFreeNewsFetchQuery != null && mLastFetchedFreeNewsDoc != null) {
             mFreeNewsFetchQuery = mFreeNewsFetchQuery.startAfter(mLastFetchedFreeNewsDoc);
-            fetchFreeNewsAndProcess(listener, articleTag);
+            fetchFreeNewsAndProcess(listener, articleTagId);
         }
     }
 
@@ -130,10 +130,10 @@ public class MapleDataModel {
      *
      * @param listener callback on data fetch complete.
      */
-    public void fetchNextBatchPaidNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    public void fetchNextBatchPaidNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         if (mPaidNewsFetchQuery != null && mLastFetchedPaidNewsDoc != null) {
             mPaidNewsFetchQuery = mPaidNewsFetchQuery.startAfter(mLastFetchedPaidNewsDoc);
-            fetchPaidNewsAndProcess(listener, articleTag);
+            fetchPaidNewsAndProcess(listener, articleTagId);
         }
     }
 
@@ -169,10 +169,10 @@ public class MapleDataModel {
      *
      * @param listener callback on data fetch complete.
      */
-    public void fetchNextBatchKnowledgeNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    public void fetchNextBatchKnowledgeNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         if (mKnowledgeNewsFetchQuery != null && mLastFetchedKnowledgeNewsDoc != null) {
             mKnowledgeNewsFetchQuery = mKnowledgeNewsFetchQuery.startAfter(mLastFetchedKnowledgeNewsDoc);
-            fetchKnowledgeNewsAndProcess(listener, articleTag);
+            fetchKnowledgeNewsAndProcess(listener, articleTagId);
         }
     }
 
@@ -208,15 +208,15 @@ public class MapleDataModel {
      *
      * @param listener callback on data fetch complete.
      */
-    public void fetchNextBatchProjectsNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    public void fetchNextBatchProjectsNewsData(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         if (mProjectsNewsFetchQuery != null && mLastFetchedProjectsNewsDoc != null) {
             mProjectsNewsFetchQuery = mProjectsNewsFetchQuery.startAfter(mLastFetchedProjectsNewsDoc);
-            fetchProjectsNewsAndProcess(listener, articleTag);
+            fetchProjectsNewsAndProcess(listener, articleTagId);
         }
     }
 
     // TODO: Refactor to extract common code
-    private void fetchFreeNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    private void fetchFreeNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         mFreeNewsFetchQuery.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     final List<NewsModel> list = new ArrayList<>();
@@ -235,17 +235,17 @@ public class MapleDataModel {
                                 && timeInMillis != null && pendingForApproval != null) {
                             list.add(new NewsModel(id,
                                     ArticleContentType.from(Integer.parseInt(articleType)), title,
-                                    description, imageUriString, debug, timeInMillis, pendingForApproval, extractStringFromHtmlString(articleArea)));
+                                    description, imageUriString, debug, timeInMillis, pendingForApproval, articleArea));
                         }
                         mLastFetchedFreeNewsDoc = snapshot;
                     }
                     mFreeNewsModels.addAll(list);
-                    if (articleTag == null) {
+                    if (articleTagId == null) {
                         listener.onDataFetchComplete(true, list);
                     } else {
                         final List<NewsModel> returnList = new ArrayList<>(list.size());
                         for (NewsModel newsModel : list) {
-                            if (articleTag.equalsIgnoreCase(newsModel.getInterestAreas())) {
+                            if (articleTagId.equalsIgnoreCase(newsModel.getInterestAreasTagId())) {
                                 returnList.add(newsModel);
                             }
                         }
@@ -259,7 +259,7 @@ public class MapleDataModel {
     }
 
     // TODO: Refactor to extract common code
-    private void fetchPaidNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    private void fetchPaidNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         mPaidNewsFetchQuery.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     final List<NewsModel> list = new ArrayList<>();
@@ -278,17 +278,17 @@ public class MapleDataModel {
                                 && timeInMillis != null && pendingForApproval != null) {
                             list.add(new NewsModel(id,
                                     ArticleContentType.from(Integer.parseInt(articleType)), title,
-                                    description, imageUriString, debug, timeInMillis, pendingForApproval, extractStringFromHtmlString(articleArea)));
+                                    description, imageUriString, debug, timeInMillis, pendingForApproval, articleArea));
                         }
                         mLastFetchedPaidNewsDoc = snapshot;
                     }
                     mPaidNewsModels.addAll(list);
-                    if (articleTag == null) {
+                    if (articleTagId == null) {
                         listener.onDataFetchComplete(true, list);
                     } else {
                         final List<NewsModel> returnList = new ArrayList<>(list.size());
                         for (NewsModel newsModel : list) {
-                            if (articleTag.equalsIgnoreCase(newsModel.getInterestAreas())) {
+                            if (articleTagId.equalsIgnoreCase(newsModel.getInterestAreasTagId())) {
                                 returnList.add(newsModel);
                             }
                         }
@@ -302,7 +302,7 @@ public class MapleDataModel {
     }
 
     // TODO: Refactor to extract common code
-    private void fetchKnowledgeNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    private void fetchKnowledgeNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         mKnowledgeNewsFetchQuery.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     final List<NewsModel> list = new ArrayList<>();
@@ -321,17 +321,17 @@ public class MapleDataModel {
                                 && timeInMillis != null && pendingForApproval != null) {
                             list.add(new NewsModel(id,
                                     ArticleContentType.from(Integer.parseInt(articleType)), title,
-                                    description, imageUriString, debug, timeInMillis, pendingForApproval, extractStringFromHtmlString(articleArea)));
+                                    description, imageUriString, debug, timeInMillis, pendingForApproval, articleArea));
                         }
                         mLastFetchedKnowledgeNewsDoc = snapshot;
                     }
                     mKnowledgeNewsModels.addAll(list);
-                    if (articleTag == null) {
+                    if (articleTagId == null) {
                         listener.onDataFetchComplete(true, list);
                     } else {
                         final List<NewsModel> returnList = new ArrayList<>(list.size());
                         for (NewsModel newsModel : list) {
-                            if (articleTag.equalsIgnoreCase(newsModel.getInterestAreas())) {
+                            if (articleTagId.equalsIgnoreCase(newsModel.getInterestAreasTagId())) {
                                 returnList.add(newsModel);
                             }
                         }
@@ -345,7 +345,7 @@ public class MapleDataModel {
     }
 
     // TODO: Refactor to extract common code
-    private void fetchProjectsNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTag) {
+    private void fetchProjectsNewsAndProcess(@NonNull OnFetchNewsDataListener listener, @Nullable String articleTagId) {
         mProjectsNewsFetchQuery.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     final List<NewsModel> list = new ArrayList<>();
@@ -364,17 +364,17 @@ public class MapleDataModel {
                                 && timeInMillis != null && pendingForApproval != null) {
                             list.add(new NewsModel(id,
                                     ArticleContentType.from(Integer.parseInt(articleType)), title,
-                                    description, imageUriString, debug, timeInMillis, pendingForApproval, extractStringFromHtmlString(articleArea)));
+                                    description, imageUriString, debug, timeInMillis, pendingForApproval, articleArea));
                         }
                         mLastFetchedProjectsNewsDoc = snapshot;
                     }
                     mProjectsNewsModels.addAll(list);
-                    if (articleTag == null) {
+                    if (articleTagId == null) {
                         listener.onDataFetchComplete(true, list);
                     } else {
                         final List<NewsModel> returnList = new ArrayList<>(list.size());
                         for (NewsModel newsModel : list) {
-                            if (articleTag.equalsIgnoreCase(newsModel.getInterestAreas())) {
+                            if (articleTagId.equalsIgnoreCase(newsModel.getInterestAreasTagId())) {
                                 returnList.add(newsModel);
                             }
                         }
@@ -385,14 +385,6 @@ public class MapleDataModel {
                     Log.e(TAG, "Failed to get data", e);
                     listener.onDataFetchComplete(false, new ArrayList<>());
                 });
-    }
-
-    @NonNull
-    private String extractStringFromHtmlString(@Nullable String htmlString) {
-        if (htmlString == null) {
-            return "";
-        }
-        return Html.fromHtml(htmlString).toString().replace("\n", "").trim();
     }
 
     public void fetchAvailableTags(@NonNull OnArticleTagsFetchListener listener) {
@@ -432,7 +424,7 @@ public class MapleDataModel {
         }
 
         for (NewsModel newsModel : mFreeNewsModels) {
-            if (newsModel.getInterestAreas() != null && newsModel.getInterestAreas().equalsIgnoreCase(articleType)) {
+            if (newsModel.getInterestAreasTagId() != null && newsModel.getInterestAreasTagId().equalsIgnoreCase(articleType)) {
                 freeModels.add(newsModel);
             }
         }
@@ -454,7 +446,7 @@ public class MapleDataModel {
         }
 
         for (NewsModel newsModel : mPaidNewsModels) {
-            if (newsModel.getInterestAreas() != null && newsModel.getInterestAreas().equalsIgnoreCase(articleType)) {
+            if (newsModel.getInterestAreasTagId() != null && newsModel.getInterestAreasTagId().equalsIgnoreCase(articleType)) {
                 paidModels.add(newsModel);
             }
         }
@@ -476,7 +468,7 @@ public class MapleDataModel {
         }
 
         for (NewsModel newsModel : mKnowledgeNewsModels) {
-            if (newsModel.getInterestAreas() != null && newsModel.getInterestAreas().equalsIgnoreCase(articleType)) {
+            if (newsModel.getInterestAreasTagId() != null && newsModel.getInterestAreasTagId().equalsIgnoreCase(articleType)) {
                 knowledgeModels.add(newsModel);
             }
         }
@@ -498,7 +490,7 @@ public class MapleDataModel {
         }
 
         for (NewsModel newsModel : mProjectsNewsModels) {
-            if (newsModel.getInterestAreas() != null && newsModel.getInterestAreas().equalsIgnoreCase(articleType)) {
+            if (newsModel.getInterestAreasTagId() != null && newsModel.getInterestAreasTagId().equalsIgnoreCase(articleType)) {
                 projectsModels.add(newsModel);
             }
         }
