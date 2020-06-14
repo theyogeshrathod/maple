@@ -71,7 +71,6 @@
             android:layout_below="@id/fullNewsDescription"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/margin5"
-            android:background="@drawable/background_rounded_corners"
             android:gravity="center"
             android:paddingLeft="@dimen/margin5"
             android:textSize="@dimen/textSize16"
@@ -79,8 +78,7 @@
             android:paddingRight="@dimen/margin5"
             android:paddingBottom="@dimen/margin2"
             android:text="@string/see_more_text"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textColor="@color/colorPrimaryDark" />
 
         <com.coolapps.yo.maple.widget.MapleImageView
             android:id="@+id/newsImage"

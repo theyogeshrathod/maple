@@ -120,6 +120,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             if (newsModel.getImageUri() == null || newsModel.getImageUri().isEmpty()) {
                 mNewsImage.setVisibility(View.GONE);
             } else {
+                mNewsImage.setVisibility(View.VISIBLE);
                 final RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL);
                 Glide.with(itemView)
                         .load(newsModel.getImageUri())

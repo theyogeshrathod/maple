@@ -23,6 +23,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsRecyclerView"
+            android:background="@color/light_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
