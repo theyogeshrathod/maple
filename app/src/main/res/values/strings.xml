@@ -24,10 +24,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="newsModel">News</string>
     <string name="user_image">User Image</string>
-    <string name="tab_text_1">Free News</string>
-    <string name="tab_text_2">Premium News</string>
-    <string name="tab_text_3">Knowledge series</string>
-    <string name="tab_text_4">Project reports</string>
+    <string name="tab_text_1">Free</string>
+    <string name="tab_text_2">Premium</string>
+    <string name="tab_text_3">Knowledge</string>
+    <string name="tab_text_4">Projects</string>
     <string name="dummy_text">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.</string>
     <string name="news_image">News Image</string>
     <string name="click_to_view">See full article</string>
