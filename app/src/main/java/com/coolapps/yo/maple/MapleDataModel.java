@@ -1,12 +1,13 @@
 package com.coolapps.yo.maple;
 
-import android.text.Html;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.coolapps.yo.maple.model.TagInterestsModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -23,24 +25,21 @@ import java.util.Set;
 public class MapleDataModel {
 
     private static final String TAG = "MapleDataModel";
+    private static final String USER_PROFILE_COLLECTION = "UserProfiles";
     private static volatile MapleDataModel sInstance = null;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-
     private List<NewsModel> mFreeNewsModels = new ArrayList<>();
     private List<NewsModel> mPaidNewsModels = new ArrayList<>();
     private List<NewsModel> mKnowledgeNewsModels = new ArrayList<>();
     private List<NewsModel> mProjectsNewsModels = new ArrayList<>();
-
     private QueryDocumentSnapshot mLastFetchedFreeNewsDoc;
     private QueryDocumentSnapshot mLastFetchedPaidNewsDoc;
     private QueryDocumentSnapshot mLastFetchedKnowledgeNewsDoc;
     private QueryDocumentSnapshot mLastFetchedProjectsNewsDoc;
-
     private Query mFreeNewsFetchQuery;
     private Query mPaidNewsFetchQuery;
     private Query mKnowledgeNewsFetchQuery;
     private Query mProjectsNewsFetchQuery;
-
     private Set<TagInterestsModel> mAvailableTags = new HashSet<>();
 
     /**
@@ -62,6 +61,7 @@ public class MapleDataModel {
 
     /**
      * This method fetches free news data and saves in a list.
+     *
      * @param listener callback on data fetch complete.
      */
     public void fetchFirstBatchFreeNewsData(@NonNull OnFetchNewsDataListener listener) {
@@ -402,6 +402,28 @@ public class MapleDataModel {
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Failed to get data", e);
                     listener.onTagsFetched(false, mAvailableTags);
+                });
+    }
+
+    /**
+     * This method gives user profile Data
+     */
+    public void fetchProfileData(String documentKey) {
+        Log.d(TAG, "fetchProfileData: docKey " + documentKey);
+        mFirestore.collection(USER_PROFILE_COLLECTION).document(documentKey)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Map<String, Object> profileData = documentSnapshot.getData();
+
+                        Log.d(TAG, "onSuccess: profileData " + profileData);
+
+                        if (profileData != null) {
+                            Log.d(TAG, "onSuccess: name " + profileData.get("name"));
+                        }
+
+                    }
                 });
     }
 

@@ -33,4 +33,16 @@ public final class LoginManager {
     public static FirebaseUser getLoggedInUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
+
+    /**
+     * This method returns the auth provider used while login to app
+     * @return : google.com for Login with gmail, and phone for Login with phone
+     */
+    public static String getAuthProvider() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null && firebaseUser.getProviderData().size() > 0) {
+            return firebaseUser.getProviderData().get(firebaseUser.getProviderData().size() - 1).getProviderId();
+        }
+        return "anonymous";
+    }
 }

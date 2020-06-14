@@ -95,6 +95,14 @@ public class ProfileFragment extends BaseFragment {
 
         final List<TagInterestsModel> interestsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
 
+        final String authProvider = LoginManager.getAuthProvider();
+
+        if (authProvider.equals("google.com")) {
+            mUserEmail.setEnabled(false);
+        } else if (authProvider.equals("phone")) {
+            mUserPhone.setEnabled(false);
+        }
+
         mChooseInterests.setOnClickListener(v -> showInterestsSelectionPopup(interestsList));
 
         mSubmitProfile.setOnClickListener(v -> verifyInputs());
@@ -303,6 +311,8 @@ public class ProfileFragment extends BaseFragment {
         final boolean emailVerified = user.isEmailVerified();
         mUserid = user.getUid();
         setUserProfileData(name, email, emailVerified, photoUrl);
+
+        MapleDataModel.getInstance().fetchProfileData(mUserid);
     }
 
     @Override

@@ -29,127 +29,170 @@
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin10"
-            android:text="@string/name"
-            android:textColor="@color/black"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textStyle="italic"/>
-
-        <EditText
-            android:hint="@string/your_full_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin5"
-            android:id="@+id/etUserName"
-            android:textColor="@color/black"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName" />
-
         <LinearLayout
+            android:id="@+id/personalInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin5"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_margin="@dimen/margin10"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:textColor="@color/black"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textStyle="italic"/>
+                android:text="@string/personal_information"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/textVerified"
-                android:layout_width="wrap_content"
+                style="@style/profile_text_style"
+                android:text="@string/name" />
+
+            <EditText
+                android:id="@+id/etUserName"
+                style="@style/profile_edittext_style"
+                android:background="@drawable/background_with_stroke"
+                android:hint="@string/your_full_name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:visibility="gone"
-                android:padding="@dimen/margin5"
-                android:background="@drawable/background_choose_button"
-                android:text="@string/unverified"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/black"
-                android:textStyle="italic" />
+                android:layout_marginTop="@dimen/margin5"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/textVerified"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:visibility="gone"
+                    android:padding="@dimen/margin5"
+                    android:background="@drawable/background_choose_button"
+                    android:text="@string/unverified"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etEmail"
+                style="@style/profile_edittext_style"
+                android:hint="@string/email_address"
+                android:background="@drawable/background_with_stroke"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"/>
+
+            <TextView
+                style="@style/profile_text_style"
+                android:text="@string/fui_phone_hint"/>
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                style="@style/profile_edittext_style"
+                android:digits="1234567890"
+                android:background="@drawable/background_with_stroke"
+                android:hint="@string/fui_phone_hint"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:importantForAutofill="no" />
+
+            <TextView
+                style="@style/profile_text_style"
+                android:text="@string/occupation"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbBusiness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/business"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                <RadioButton
+                    android:id="@+id/rbJob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin10"
+                    android:text="@string/job"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            </RadioGroup>
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/etEmail"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin5"
-            android:hint="@string/email_address"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/black" />
+            android:orientation="vertical"
+            android:layout_margin="@dimen/margin5">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin10"
-            android:text="@string/fui_phone_hint"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/black"
-            android:textStyle="italic" />
-
-        <EditText
-            android:hint="@string/fui_phone_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin5"
-            android:id="@+id/etPhoneNumber"
-            android:textColor="@color/black"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:importantForAutofill="no"
-            android:digits="1234567890"
-            android:maxLength="10"
-            android:inputType="phone" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin10"
-            android:text="@string/occupation"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/black"
-            android:textStyle="italic" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin5"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/business"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:id="@+id/rbBusiness"/>
+                android:text="@string/location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"/>
 
-            <RadioButton
+            <TextView
+                style="@style/profile_text_style"
+                android:text="@string/address"/>
+
+            <EditText
+                android:id="@+id/etAddress"
+                style="@style/profile_edittext_style"
+                android:background="@drawable/background_with_stroke"
+                android:hint="@string/add_address"
+                android:importantForAutofill="no"
+                android:inputType="textPostalAddress" />
+
+            <TextView
+                style="@style/profile_text_style"
+                android:text="@string/state"/>
+
+            <EditText
+                android:id="@+id/etState"
+                style="@style/profile_edittext_style"
+                android:background="@drawable/background_with_stroke"
+                android:hint="@string/add_state"
+                android:importantForAutofill="no"
+                android:inputType="textPostalAddress" />
+
+            <TextView
+                style="@style/profile_text_style"
+                android:text="@string/country"/>
+
+            <Spinner
+                android:id="@+id/spinnerCountry"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin10"
-                android:text="@string/job"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:id="@+id/rbJob"/>
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin5"
+                android:spinnerMode="dialog"
+                android:background="@drawable/background_with_stroke"/>
 
-        </RadioGroup>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin5"
+            android:layout_margin="@dimen/margin5"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -180,36 +223,25 @@
             android:id="@+id/myInterests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin5"
+            android:layout_margin="@dimen/margin5"
+            android:background="@drawable/background_with_stroke"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/black"
             android:textAllCaps="true"
             android:textStyle="italic" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin1"
-            android:layout_marginTop="@dimen/margin5"
-            android:background="@color/gray"/>
-
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin10"
-            android:text="@string/about_my_business"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/black"
-            android:textStyle="italic" />
+            style="@style/profile_text_style"
+            android:layout_margin="@dimen/margin5"
+            android:text="@string/about_my_business" />
 
         <EditText
             android:id="@+id/etAboutMyBusiness"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin5"
-            android:layout_height="wrap_content"
+            style="@style/profile_edittext_style"
+            android:layout_margin="@dimen/margin5"
             android:inputType="textImeMultiLine"
+            android:background="@drawable/background_with_stroke"
             android:hint="@string/about_my_business"
-            android:textStyle="normal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:importantForAutofill="no" />
 
         <TextView

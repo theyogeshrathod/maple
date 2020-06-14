@@ -92,4 +92,11 @@
     <string name="service_text">Service</string>
     <string name="manufacturing_text">Manufacturing</string>
     <string name="business_text">Business</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="address">Address</string>
+    <string name="location">Location</string>
+    <string name="add_address">Add address</string>
+    <string name="state">State</string>
+    <string name="add_state">Add State</string>
+    <string name="country">Country</string>
 </resources>
