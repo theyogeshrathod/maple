@@ -2,21 +2,18 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="@dimen/margin5">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin10"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="@dimen/profile_card_dimension"
             android:layout_height="@dimen/profile_card_dimension"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/margin10"
+            android:layout_margin="@dimen/margin5"
             app:cardCornerRadius="@dimen/profile_card_radius">
 
             <ImageView
@@ -29,12 +26,18 @@
 
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/personalInfoLayout"
             android:layout_width="match_parent"
+            android:layout_margin="@dimen/margin5"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin10"
-            android:orientation="vertical">
+            app:cardCornerRadius="@dimen/margin5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin10"
+                android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -53,7 +56,7 @@
                 android:background="@drawable/background_with_stroke"
                 android:hint="@string/your_full_name"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,11 +141,21 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:elevation="@dimen/margin5"
+            app:cardCornerRadius="@dimen/margin5"
             android:layout_margin="@dimen/margin5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/margin10"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -175,74 +188,92 @@
                 android:importantForAutofill="no"
                 android:inputType="textPostalAddress" />
 
-            <TextView
-                style="@style/profile_text_style"
-                android:text="@string/country"/>
+                <TextView
+                    style="@style/profile_text_style"
+                    android:text="@string/country" />
 
-            <Spinner
-                android:id="@+id/spinnerCountry"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="@dimen/margin5"
-                android:spinnerMode="dialog"
-                android:background="@drawable/background_with_stroke"/>
+                <Spinner
+                    android:id="@+id/spinnerCountry"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/margin5"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"
+                    android:background="@drawable/background_spinner" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin5"
-            android:gravity="center"
-            android:orientation="horizontal">
+            app:cardCornerRadius="@dimen/margin5">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/my_interests"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/black"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/chooseInterests"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:padding="@dimen/margin5"
-                android:background="@drawable/background_choose_button"
-                android:text="@string/choose"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/black"
-                android:textStyle="italic" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin5"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/myInterests"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin5"
-            android:background="@drawable/background_with_stroke"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/black"
-            android:textAllCaps="true"
-            android:textStyle="italic" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/my_interests"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/black"
+                        android:textStyle="italic" />
 
-        <TextView
-            style="@style/profile_text_style"
-            android:layout_margin="@dimen/margin5"
-            android:text="@string/about_my_business" />
+                    <TextView
+                        android:id="@+id/chooseInterests"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:padding="@dimen/margin5"
+                        android:background="@drawable/background_choose_button"
+                        android:text="@string/choose"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/black"
+                        android:textStyle="italic" />
 
-        <EditText
-            android:id="@+id/etAboutMyBusiness"
-            style="@style/profile_edittext_style"
-            android:layout_margin="@dimen/margin5"
-            android:inputType="textImeMultiLine"
-            android:background="@drawable/background_with_stroke"
-            android:hint="@string/about_my_business"
-            android:importantForAutofill="no" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/myInterests"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/click_choose_to_select"
+                    android:layout_margin="@dimen/margin5"
+                    android:background="@drawable/background_with_stroke"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"/>
+
+                <TextView
+                    style="@style/profile_text_style"
+                    android:layout_margin="@dimen/margin5"
+                    android:text="@string/about_my_business" />
+
+                <EditText
+                    android:id="@+id/etAboutMyBusiness"
+                    style="@style/profile_edittext_style"
+                    android:layout_margin="@dimen/margin5"
+                    android:inputType="textMultiLine"
+                    android:background="@drawable/background_with_stroke"
+                    android:hint="@string/about_my_business"
+                    android:importantForAutofill="no" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/submitProfile"

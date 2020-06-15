@@ -3,12 +3,16 @@ package com.coolapps.yo.maple.fragment;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ import com.coolapps.yo.maple.MapleDataModel;
 import com.coolapps.yo.maple.R;
 import com.coolapps.yo.maple.adapter.InterestsAdapter;
 import com.coolapps.yo.maple.model.TagInterestsModel;
+import com.coolapps.yo.maple.util.Countries;
 import com.coolapps.yo.maple.util.EmailValidation;
 import com.coolapps.yo.maple.util.MobileNumberValidation;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,38 +43,50 @@ import java.util.Map;
  * ProfileFragment for user profile details
  */
 public class ProfileFragment extends BaseFragment {
-    public static final String INTERESTS = "interests";
+    private static final String INTERESTS = "interests";
     private static final String TAG = "ProfileFragment";
     private static final String LOADING_TAG = "loading_tag";
     private static final String USER_ID = "userId";
     private static final String USER_NAME = "name";
+    private static final String USER_IMAGE = "profileImage";
     private static final String USER_EMAIL = "email";
     private static final String USER_PHONE = "phone";
+    private static final String USER_ADDRESS = "address";
+    private static final String USER_STATE = "state";
+    private static final String USER_COUNTRY = "country";
     private static final String OCCUPATION = "occupation";
     private static final String ABOUT_BUSINESS = "aboutBusiness";
     private static final String USER_PROFILE_KEY = "UserProfiles";
+    private static final String SELECT_COUNTRY = "Select Your Country";
     private FirebaseAuth mAuth;
     private EditText mUserName;
     private EditText mUserEmail;
     private EditText mUserPhone;
+    private EditText mUserAddress;
+    private EditText mUserState;
     private EditText mAboutBusiness;
     private TextView mTextVerified; // we can put this field if needed or we can remove it
     private ImageView mUserImage;
     private TextView mSubmitProfile;
     private TextView mMyInterest;
-    private RadioButton mRadioBusiness;
-    private RadioButton mRadioJob;
+    private RadioButton mRadioBusiness; // 1
+    private RadioButton mRadioJob; // 2
     private TextView mChooseInterests;
     private int radioResult = 0;
-    private String mUserid;
+    private String mUserId;
+    private String mUserProfile = "";
     private LoadingFragment mLoadingFragment = LoadingFragment.newInstance();
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private List<String> mSelectedInterestNames = new ArrayList<>();
     private List<String> mSelectedInterestIds = new ArrayList<>();
     private String allIds = "";
     private String allInterests = "";
+    private Map<String, Object> profileData = new HashMap<>();
+    private List<String> countriesList = new ArrayList<>();
+    private Spinner mSpinnerCountries;
+    private String mSelectedCountry = "";
 
-    private static String getCommaSeperatedString(String[] array) {
+    private static String getCommaSeparatedString(String[] array) {
         String result = "";
         if (array.length > 0) {
             StringBuilder sb = new StringBuilder();
@@ -77,6 +94,18 @@ public class ProfileFragment extends BaseFragment {
                 sb.append(s).append(",");
             }
             result = sb.deleteCharAt(sb.length() - 1).toString();
+        }
+        return result;
+    }
+
+    private static String getCommaSpaceSeparatedString(String[] array) {
+        String result = "";
+        if (array.length > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : array) {
+                sb.append(s).append(", ");
+            }
+            result = sb.delete(sb.length() - 2, sb.length() - 1).toString();
         }
         return result;
     }
@@ -119,7 +148,7 @@ public class ProfileFragment extends BaseFragment {
         builder.setCancelable(true);
 
         final RecyclerView interestRecycler = view.findViewById(R.id.chooseInterestList);
-        final TextView doneText = view.findViewById(R.id. button_done);
+        final TextView doneText = view.findViewById(R.id.button_done);
         final AlertDialog alertDialog = builder.create();
 
         interestRecycler.setHasFixedSize(true);
@@ -162,8 +191,8 @@ public class ProfileFragment extends BaseFragment {
         String[] idsArray = mSelectedInterestIds.toArray(new String[0]);
         String[] namesArray = mSelectedInterestNames.toArray(new String[0]);
 
-        allIds = getCommaSeperatedString(idsArray);
-        allInterests = getCommaSeperatedString(namesArray);
+        allIds = getCommaSeparatedString(idsArray);
+        allInterests = getCommaSpaceSeparatedString(namesArray);
 
         mMyInterest.setText(allInterests);
     }
@@ -172,6 +201,8 @@ public class ProfileFragment extends BaseFragment {
         final String name = mUserName.getText().toString();
         final String email = mUserEmail.getText().toString();
         final String phone = mUserPhone.getText().toString();
+        final String address = mUserAddress.getText().toString();
+        final String state = mUserState.getText().toString();
         final String aboutBusiness = mAboutBusiness.getText().toString();
 
         if (name.isEmpty()) {
@@ -202,12 +233,6 @@ public class ProfileFragment extends BaseFragment {
             return;
         }
 
-        if (aboutBusiness.isEmpty()) {
-            mAboutBusiness.setError(getResources().getString(R.string.required));
-            mAboutBusiness.requestFocus();
-            return;
-        }
-
         if (mRadioBusiness.isChecked()) {
             radioResult = 1;
         } else if (mRadioJob.isChecked()) {
@@ -219,24 +244,66 @@ public class ProfileFragment extends BaseFragment {
             return;
         }
 
+        if (address.isEmpty()) {
+            mUserAddress.setError(getResources().getString(R.string.required));
+            mUserAddress.requestFocus();
+            return;
+        }
+
+        if (address.length() < 10) {
+            Toast.makeText(requireActivity(), "Please Enter Detailed Address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (state.isEmpty()) {
+            mUserState.setError(getResources().getString(R.string.required));
+            mUserState.requestFocus();
+            return;
+        }
+
+        if (state.length() <= 2) {
+            Toast.makeText(requireActivity(), "Please Enter State", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (mSelectedCountry.equals(SELECT_COUNTRY)) {
+            Toast.makeText(requireActivity(), SELECT_COUNTRY, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (aboutBusiness.isEmpty()) {
+            mAboutBusiness.setError(getResources().getString(R.string.required));
+            mAboutBusiness.requestFocus();
+            return;
+        }
+
+        if (aboutBusiness.length() < 10) {
+            Toast.makeText(requireActivity(), R.string.min_10_chars_accepted, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (allIds.isEmpty()) {
             Toast.makeText(requireActivity(), "Please choose your interests.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        submitData(name, email, phone, radioResult, allIds, aboutBusiness);
+        submitData(name, email, phone, radioResult, allIds, aboutBusiness, address, state, mSelectedCountry);
     }
 
-    private void submitData(String name, String email, String phone, int radioResult, String myInterestIds, String aboutBusiness) {
+    private void submitData(String name, String email, String phone, int radioResult, String myInterestIds, String aboutBusiness, String address, String state, String country) {
         showLoadingFragment();
 
-        final String id = mUserid;
+        final String id = mUserId;
 
         final Map<String, String> profileData = new HashMap<>();
         profileData.put(USER_ID, id);
         profileData.put(USER_NAME, name);
         profileData.put(USER_EMAIL, email);
         profileData.put(USER_PHONE, phone);
+        profileData.put(USER_IMAGE, mUserProfile);
+        profileData.put(USER_ADDRESS, address);
+        profileData.put(USER_STATE, state);
+        profileData.put(USER_COUNTRY, country);
         profileData.put(OCCUPATION, String.valueOf(radioResult));
         profileData.put(INTERESTS, myInterestIds);
         profileData.put(ABOUT_BUSINESS, aboutBusiness);
@@ -256,6 +323,8 @@ public class ProfileFragment extends BaseFragment {
         mUserName = view.findViewById(R.id.etUserName);
         mUserEmail = view.findViewById(R.id.etEmail);
         mUserPhone = view.findViewById(R.id.etPhoneNumber);
+        mUserAddress = view.findViewById(R.id.etAddress);
+        mUserState = view.findViewById(R.id.etState);
         mAboutBusiness = view.findViewById(R.id.etAboutMyBusiness);
         mUserImage = view.findViewById(R.id.userImage);
         mTextVerified = view.findViewById(R.id.textVerified);
@@ -264,6 +333,30 @@ public class ProfileFragment extends BaseFragment {
         mMyInterest = view.findViewById(R.id.myInterests);
         mRadioJob = view.findViewById(R.id.rbJob);
         mChooseInterests = view.findViewById(R.id.chooseInterests);
+        mSpinnerCountries = view.findViewById(R.id.spinnerCountry);
+
+        countriesList.add(SELECT_COUNTRY);
+        countriesList.addAll(Countries.getCountries());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1, countriesList);
+        mSpinnerCountries.setAdapter(adapter);
+
+        mSpinnerCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final String selectedCountry = countriesList.get(position);
+                if (selectedCountry.equals(SELECT_COUNTRY)) {
+                    Toast.makeText(requireActivity(), "Please select country", Toast.LENGTH_SHORT).show();
+                } else {
+                    mSelectedCountry = selectedCountry;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     /**
@@ -273,21 +366,53 @@ public class ProfileFragment extends BaseFragment {
      * @param email         - user email
      * @param emailVerified - isEmailVerified
      * @param photoUrl      - photo url
+     * @param profileData   - profileData from database
      */
-    private void setUserProfileData(String name, String email, boolean emailVerified, Uri photoUrl) {
-        mUserName.setText(name);
-        mUserEmail.setText(email);
+    private void setUserProfileData(String name, String email, boolean emailVerified, Uri photoUrl, Map<String, Object> profileData) {
 
-        if (emailVerified) {
-            mTextVerified.setText(R.string.verified);
+        if (profileData != null) {
+            mUserName.setText((String) profileData.get(USER_NAME));
+            mUserEmail.setText((String) profileData.get(USER_EMAIL));
+            mUserPhone.setText((String) profileData.get(USER_PHONE));
+            mUserAddress.setText((String) profileData.get(USER_ADDRESS));
+            mUserState.setText((String) profileData.get(USER_STATE));
+            mAboutBusiness.setText((String) profileData.get(ABOUT_BUSINESS));
+            final String occupation = (String) profileData.get(OCCUPATION);
+            final String country = (String) profileData.get(USER_COUNTRY);
+
+            mSpinnerCountries.setSelection(countriesList.indexOf(country));
+
+            if (profileData.get(USER_IMAGE) != null) {
+                Glide.with(requireActivity())
+                        .load((String) profileData.get(USER_IMAGE))
+                        .placeholder(R.drawable.person_icon)
+                        .into(mUserImage);
+            }
+
+            if (occupation != null) {
+                if (occupation.equals("1")) {
+                    mRadioBusiness.setChecked(true);
+                } else if (occupation.equals("2")) {
+                    mRadioJob.setChecked(true);
+                }
+            }
+
+
         } else {
-            mTextVerified.setText(R.string.unverified);
-        }
+            mUserName.setText(name);
+            mUserEmail.setText(email);
 
-        Glide.with(requireActivity())
-                .load(photoUrl)
-                .placeholder(R.drawable.person_icon)
-                .into(mUserImage);
+            if (emailVerified) {
+                mTextVerified.setText(R.string.verified);
+            } else {
+                mTextVerified.setText(R.string.unverified);
+            }
+
+            Glide.with(requireActivity())
+                    .load(photoUrl)
+                    .placeholder(R.drawable.person_icon)
+                    .into(mUserImage);
+        }
     }
 
     @Override
@@ -309,10 +434,16 @@ public class ProfileFragment extends BaseFragment {
         final Uri photoUrl = user.getPhotoUrl();
 
         final boolean emailVerified = user.isEmailVerified();
-        mUserid = user.getUid();
-        setUserProfileData(name, email, emailVerified, photoUrl);
+        mUserId = user.getUid();
+        if (photoUrl != null) {
+            mUserProfile = photoUrl.toString();
+        }
 
-        MapleDataModel.getInstance().fetchProfileData(mUserid);
+        profileData = MapleDataModel.getInstance().fetchProfileData(mUserId);
+
+        Log.d(TAG, "getUserInfo: profileData " + profileData);
+
+        setUserProfileData(name, email, emailVerified, photoUrl, profileData);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class MapleDataModel {
     private Query mKnowledgeNewsFetchQuery;
     private Query mProjectsNewsFetchQuery;
     private Set<TagInterestsModel> mAvailableTags = new HashSet<>();
+    private Map<String, Object> profileData = new HashMap<>();
 
     /**
      * Should not be instantiated outside the class
@@ -408,23 +410,20 @@ public class MapleDataModel {
     /**
      * This method gives user profile Data
      */
-    public void fetchProfileData(String documentKey) {
+    public Map<String, Object> fetchProfileData(String documentKey) {
         Log.d(TAG, "fetchProfileData: docKey " + documentKey);
         mFirestore.collection(USER_PROFILE_COLLECTION).document(documentKey)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object> profileData = documentSnapshot.getData();
-
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot != null) {
+                        profileData = documentSnapshot.getData();
                         Log.d(TAG, "onSuccess: profileData " + profileData);
-
-                        if (profileData != null) {
-                            Log.d(TAG, "onSuccess: name " + profileData.get("name"));
-                        }
-
+                    } else {
+                        Log.e(TAG, "onSuccess: profileData null" );
                     }
+
                 });
+        return profileData;
     }
 
     @NonNull
@@ -526,5 +525,9 @@ public class MapleDataModel {
 
     public interface OnArticleTagsFetchListener {
         void onTagsFetched(boolean success, @NonNull Set<TagInterestsModel> tags);
+    }
+
+    public interface OnProfileDataFetchListener {
+        void onProfileDataFetched(boolean success, @NonNull Map<String, Object> profileData);
     }
 }

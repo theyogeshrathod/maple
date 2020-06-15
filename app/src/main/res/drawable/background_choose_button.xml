@@ -4,7 +4,7 @@
     <corners android:radius="@dimen/margin5" />
     <gradient
         android:angle="270"
-        android:endColor="@color/premiumCardBackground"
+        android:endColor="@color/colorPrimary"
         android:startColor="@color/white"
         android:type="linear" />
 </shape>

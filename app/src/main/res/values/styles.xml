@@ -52,4 +52,6 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="spinnerItemStyle" parent="android:Widget.Material.Light.TextView.SpinnerItem"/>
+
 </resources>
