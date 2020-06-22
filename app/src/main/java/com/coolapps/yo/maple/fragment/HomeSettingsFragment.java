@@ -1,5 +1,8 @@
 package com.coolapps.yo.maple.fragment;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,19 +35,27 @@ public class HomeSettingsFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.sign_out_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginManager.signOut(requireContext());
-            }
+        view.findViewById(R.id.sign_out_button).setOnClickListener(v -> {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+            builder.setCancelable(false);
+            builder.setTitle(R.string.are_you_sure_to_logout);
+            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    LoginManager.signOut(requireContext());
+                }
+            });
+            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
         });
 
-        view.findViewById(R.id.textProfile).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFragment(new ProfileFragment());
-            }
-        });
+        view.findViewById(R.id.textProfile).setOnClickListener(v -> showFragment(new ProfileFragment()));
     }
 
     @Override

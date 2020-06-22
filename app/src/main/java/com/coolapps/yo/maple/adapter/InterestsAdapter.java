@@ -20,6 +20,11 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
     private static final String TAG = "InterestsAdapter";
     private List<TagInterestsModel> mTagsList = new ArrayList<>();
     private OnItemCheckListener mOnItemClick;
+    private List<String> mTagIds;
+
+    public InterestsAdapter(List<String> tagIdList) {
+        mTagIds = tagIdList;
+    }
 
     public void setOnItemClick(OnItemCheckListener onItemClick) {
         mOnItemClick = onItemClick;
@@ -61,7 +66,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         void onItemUncheck(TagInterestsModel tag);
     }
 
-    final static class InterestViewHolder extends RecyclerView.ViewHolder {
+    final class InterestViewHolder extends RecyclerView.ViewHolder {
         private CheckBox mInterestCheckBox;
 
         InterestViewHolder(@NonNull View itemView) {
@@ -73,6 +78,10 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         void bind(TagInterestsModel tagInterests) {
             Log.e(TAG, "bind: tag name " + tagInterests.getTagName());
             mInterestCheckBox.setText(tagInterests.getTagName());
+
+            if (mTagIds.contains(tagInterests.getId())) {
+                mInterestCheckBox.setChecked(true);
+            }
         }
     }
 }

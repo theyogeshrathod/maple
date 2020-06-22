@@ -102,4 +102,7 @@
     <string name="select_country">Select Your Country</string>
     <string name="click_choose_to_select">Click Choose to select</string>
     <string name="min_10_chars_accepted">Minimum 10 characters accepted</string>
+    <string name="are_you_sure_to_logout">Are you sure you want to logout ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

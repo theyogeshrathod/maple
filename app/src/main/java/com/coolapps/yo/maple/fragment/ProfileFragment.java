@@ -35,6 +35,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,7 @@ import java.util.Map;
 /**
  * ProfileFragment for user profile details
  */
+
 public class ProfileFragment extends BaseFragment {
     private static final String INTERESTS = "interests";
     private static final String TAG = "ProfileFragment";
@@ -85,6 +87,8 @@ public class ProfileFragment extends BaseFragment {
     private List<String> countriesList = new ArrayList<>();
     private Spinner mSpinnerCountries;
     private String mSelectedCountry = "";
+    private List<TagInterestsModel> interestsList;
+    private List<String> tagIdList = new ArrayList<>();
 
     private static String getCommaSeparatedString(String[] array) {
         String result = "";
@@ -122,8 +126,6 @@ public class ProfileFragment extends BaseFragment {
 
         init(view);
 
-        final List<TagInterestsModel> interestsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
-
         final String authProvider = LoginManager.getAuthProvider();
 
         if (authProvider.equals("google.com")) {
@@ -154,7 +156,7 @@ public class ProfileFragment extends BaseFragment {
         interestRecycler.setHasFixedSize(true);
         interestRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        final InterestsAdapter adapter = new InterestsAdapter();
+        final InterestsAdapter adapter = new InterestsAdapter(tagIdList);
         interestRecycler.setAdapter(adapter);
 
         adapter.setInterestsList(interestsList);
@@ -173,15 +175,12 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
-        doneText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mSelectedInterestIds.size() > 0) {
-                    alertDialog.dismiss();
-                    submitInterests(mSelectedInterestIds, mSelectedInterestNames);
-                } else {
-                    Toast.makeText(requireActivity(), R.string.select_interest, Toast.LENGTH_SHORT).show();
-                }
+        doneText.setOnClickListener(v -> {
+            if (mSelectedInterestIds.size() > 0) {
+                alertDialog.dismiss();
+                submitInterests(mSelectedInterestIds, mSelectedInterestNames);
+            } else {
+                Toast.makeText(requireActivity(), R.string.select_interest, Toast.LENGTH_SHORT).show();
             }
         });
         alertDialog.show();
@@ -345,9 +344,7 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 final String selectedCountry = countriesList.get(position);
-                if (selectedCountry.equals(SELECT_COUNTRY)) {
-                    Toast.makeText(requireActivity(), "Please select country", Toast.LENGTH_SHORT).show();
-                } else {
+                if (!selectedCountry.equals(SELECT_COUNTRY)) {
                     mSelectedCountry = selectedCountry;
                 }
             }
@@ -379,6 +376,30 @@ public class ProfileFragment extends BaseFragment {
             mAboutBusiness.setText((String) profileData.get(ABOUT_BUSINESS));
             final String occupation = (String) profileData.get(OCCUPATION);
             final String country = (String) profileData.get(USER_COUNTRY);
+            final String tagIds = (String) profileData.get(INTERESTS);
+
+            if (tagIds != null) {
+                tagIdList = Arrays.asList(tagIds.split(","));
+                for (int i = 0; i < tagIdList.size(); i++) {
+                    Log.d(TAG, "setUserProfileData: tags " + tagIdList.get(i));
+                }
+                String interests = "";
+
+                final StringBuilder sb = new StringBuilder();
+
+                for (int i = 0; i < tagIdList.size(); i++) {
+                    String id = tagIdList.get(i);
+                    for (int j = 0; j < interestsList.size(); j++) {
+                        if (id.equals(interestsList.get(j).getId())) {
+                            sb.append(interestsList.get(j).getTagName()).append(", ");
+                        }
+                    }
+                }
+                interests = sb.delete(sb.length() - 2, sb.length() - 1).toString();
+                mMyInterest.setText(interests);
+
+                Log.d(TAG, "setUserProfileData: interests " + interests);
+            }
 
             mSpinnerCountries.setSelection(countriesList.indexOf(country));
 
@@ -396,7 +417,6 @@ public class ProfileFragment extends BaseFragment {
                     mRadioJob.setChecked(true);
                 }
             }
-
 
         } else {
             mUserName.setText(name);
@@ -438,6 +458,8 @@ public class ProfileFragment extends BaseFragment {
         if (photoUrl != null) {
             mUserProfile = photoUrl.toString();
         }
+
+        interestsList = new ArrayList<>(MapleDataModel.getInstance().getAvailableTags());
 
         profileData = MapleDataModel.getInstance().fetchProfileData(mUserId);
 

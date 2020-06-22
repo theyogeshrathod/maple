@@ -22,7 +22,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/user_image"
                 android:scaleType="centerCrop"
-                android:src="@drawable/person_icon" />
+                android:src="@drawable/profile_icon" />
 
         </androidx.cardview.widget.CardView>
 
@@ -126,6 +126,7 @@
                     android:id="@+id/rbBusiness"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
                     android:text="@string/business"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
@@ -134,6 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin10"
+                    android:buttonTint="@color/colorPrimary"
                     android:text="@string/job"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
