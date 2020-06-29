@@ -49,6 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnFragme
     private TextView mToolbarTitle;
     private ImageButton mToolbarBackButton;
     private ImageButton mToolbarSettingsButton;
+    private ImageButton mToolbarHomeButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnFragme
         }
 
         mToolbarSettingsButton = findViewById(R.id.toolbar_settings_button);
+        mToolbarHomeButton = findViewById(R.id.toolbar_home_button);
         mToolbarTitle = findViewById(R.id.toolbar_title);
         mToolbarBackButton = findViewById(R.id.toolbar_back_button);
         mToolbarBackButton.setOnClickListener(v -> super.onBackPressed());
@@ -105,12 +107,20 @@ public abstract class BaseActivity extends AppCompatActivity implements OnFragme
         mToolbarSettingsButton.setOnClickListener(listener);
     }
 
+    public void setToolbarHomeClickListener(View.OnClickListener listener) {
+        mToolbarHomeButton.setOnClickListener(listener);
+    }
+
     public void setShowBackButton(boolean show) {
         mToolbarBackButton.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public void setShowSettingsButton(boolean show) {
         mToolbarSettingsButton.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    public void setShowHomeButton(boolean show) {
+        mToolbarHomeButton.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     @Override

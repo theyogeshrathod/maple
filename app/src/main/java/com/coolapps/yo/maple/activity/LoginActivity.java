@@ -80,10 +80,10 @@ public class LoginActivity extends BaseActivity {
             if (resultCode == Activity.RESULT_OK) {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
-                    Log.d(TAG, "Logged in successfully with user: " + user + ", response: "  + response);
+                    Log.d(TAG, "Logged in successfully with user: " + user + ", response: " + response);
                     fetchAllData();
                 } else {
-                    Log.d(TAG, "User is null. " + "response: "  + response);
+                    Log.d(TAG, "User is null. " + "response: " + response);
                     showSomethingWentWrongAlert();
                 }
             } else {

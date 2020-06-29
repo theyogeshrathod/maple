@@ -108,7 +108,6 @@
                 android:background="@drawable/background_with_stroke"
                 android:hint="@string/fui_phone_hint"
                 android:inputType="phone"
-                android:maxLength="10"
                 android:importantForAutofill="no" />
 
             <TextView

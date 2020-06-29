@@ -2,6 +2,7 @@ package com.coolapps.yo.maple;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,16 +11,24 @@ import com.coolapps.yo.maple.activity.LoginActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Manager class to manage login.
  */
 public final class LoginManager {
 
+    private static final String USER_PROFILE = "UserProfiles";
+    private static final String TAG = "LoginManager";
+    private static boolean isUserAvailable = false;
+
     /**
      * Utility class. Should not be instantiated.
      */
-    private LoginManager() { }
+    private LoginManager() {
+    }
 
     public static void signOut(@NonNull Context context) {
         AuthUI.getInstance().signOut(context).addOnCompleteListener(task -> {
@@ -36,6 +45,7 @@ public final class LoginManager {
 
     /**
      * This method returns the auth provider used while login to app
+     *
      * @return : google.com for Login with gmail, and phone for Login with phone
      */
     public static String getAuthProvider() {
@@ -44,5 +54,30 @@ public final class LoginManager {
             return firebaseUser.getProviderData().get(firebaseUser.getProviderData().size() - 1).getProviderId();
         }
         return "anonymous";
+    }
+
+    public static boolean checkUserExist() {
+
+        if (getLoggedInUser() != null) {
+            final String userId = getLoggedInUser().getUid();
+            final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+            final DocumentReference documentReference = firestore.collection(USER_PROFILE).document(userId);
+
+            documentReference.get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot snapshot = task.getResult();
+                            Log.d(TAG, "checkUserExist: snapshot " + snapshot);
+                            if (snapshot != null) {
+                                Log.d(TAG, "checkUserExist: exists");
+                                isUserAvailable = true;
+                            } else {
+                                Log.d(TAG, "checkUserExist: null");
+                            }
+                        }
+                    });
+        }
+        return isUserAvailable;
     }
 }

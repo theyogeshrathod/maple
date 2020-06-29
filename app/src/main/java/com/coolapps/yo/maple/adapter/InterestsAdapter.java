@@ -33,7 +33,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
     @NonNull
     @Override
     public InterestsAdapter.InterestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new InterestViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_choose_interest, parent,false));
+        return new InterestViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_choose_interest, parent, false));
     }
 
     @Override

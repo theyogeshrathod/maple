@@ -1,6 +1,8 @@
 package com.coolapps.yo.maple.fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +32,6 @@ import com.coolapps.yo.maple.adapter.InterestsAdapter;
 import com.coolapps.yo.maple.model.TagInterestsModel;
 import com.coolapps.yo.maple.util.Countries;
 import com.coolapps.yo.maple.util.EmailValidation;
-import com.coolapps.yo.maple.util.MobileNumberValidation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,6 +41,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.coolapps.yo.maple.util.Constants.PREFERENCE_NAME;
 
 /**
  * ProfileFragment for user profile details
@@ -89,6 +93,7 @@ public class ProfileFragment extends BaseFragment {
     private String mSelectedCountry = "";
     private List<TagInterestsModel> interestsList;
     private List<String> tagIdList = new ArrayList<>();
+    private SharedPreferences sharedPreferences;
 
     private static String getCommaSeparatedString(String[] array) {
         String result = "";
@@ -114,6 +119,10 @@ public class ProfileFragment extends BaseFragment {
         return result;
     }
 
+    public static Fragment newInstance() {
+        return new ProfileFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -127,13 +136,16 @@ public class ProfileFragment extends BaseFragment {
         init(view);
 
         final String authProvider = LoginManager.getAuthProvider();
-
-        if (authProvider.equals("google.com")) {
-            mUserEmail.setEnabled(false);
-        } else if (authProvider.equals("phone")) {
-            mUserPhone.setEnabled(false);
+        final FirebaseUser user = LoginManager.getLoggedInUser();
+        if (user != null) {
+            if (authProvider.equals("google.com")) {
+                mUserEmail.setText(user.getEmail());
+                mUserEmail.setEnabled(false);
+            } else if (authProvider.equals("phone")) {
+                mUserPhone.setText(user.getPhoneNumber());
+                mUserPhone.setEnabled(false);
+            }
         }
-
         mChooseInterests.setOnClickListener(v -> showInterestsSelectionPopup(interestsList));
 
         mSubmitProfile.setOnClickListener(v -> verifyInputs());
@@ -186,7 +198,8 @@ public class ProfileFragment extends BaseFragment {
         alertDialog.show();
     }
 
-    private void submitInterests(List<String> mSelectedInterestIds, List<String> mSelectedInterestNames) {
+    private void submitInterests
+            (List<String> mSelectedInterestIds, List<String> mSelectedInterestNames) {
         String[] idsArray = mSelectedInterestIds.toArray(new String[0]);
         String[] namesArray = mSelectedInterestNames.toArray(new String[0]);
 
@@ -224,11 +237,6 @@ public class ProfileFragment extends BaseFragment {
         if (phone.isEmpty()) {
             mUserPhone.setError(getResources().getString(R.string.required));
             mUserPhone.requestFocus();
-            return;
-        }
-
-        if (!MobileNumberValidation.isMobileValid(phone)) {
-            Toast.makeText(requireActivity(), "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -289,7 +297,8 @@ public class ProfileFragment extends BaseFragment {
         submitData(name, email, phone, radioResult, allIds, aboutBusiness, address, state, mSelectedCountry);
     }
 
-    private void submitData(String name, String email, String phone, int radioResult, String myInterestIds, String aboutBusiness, String address, String state, String country) {
+    private void submitData(String name, String email, String phone, int radioResult, String
+            myInterestIds, String aboutBusiness, String address, String state, String country) {
         showLoadingFragment();
 
         final String id = mUserId;
@@ -319,6 +328,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void init(View view) {
+        sharedPreferences = requireActivity().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         mUserName = view.findViewById(R.id.etUserName);
         mUserEmail = view.findViewById(R.id.etEmail);
         mUserPhone = view.findViewById(R.id.etPhoneNumber);
@@ -365,7 +375,8 @@ public class ProfileFragment extends BaseFragment {
      * @param photoUrl      - photo url
      * @param profileData   - profileData from database
      */
-    private void setUserProfileData(String name, String email, boolean emailVerified, Uri photoUrl, Map<String, Object> profileData) {
+    private void setUserProfileData(String name, String email, boolean emailVerified, Uri
+            photoUrl, Map<String, Object> profileData) {
 
         if (profileData != null) {
             mUserName.setText((String) profileData.get(USER_NAME));
